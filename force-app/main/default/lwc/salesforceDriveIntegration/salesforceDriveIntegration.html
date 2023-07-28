@@ -1,0 +1,144 @@
+<template>
+    <div if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </div>
+    <lightning-card>
+        <div if:true={beforeAuthorization}>
+            <div class="slds-size_2-of-4 slds-align_absolute-center" if:true={gDriveLogo}>
+                <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScNGu4a5jxTcMKRwl2Jn9Yft3fyCfTWpLfE5mGeFesKA&s" alt="" srcset="" sizes="30%"> -->
+                <lightning-carousel-image
+                    src="https://www.dignited.com/wp-content/uploads/2020/04/google_drive_logo-1024x512.png"
+                    header="Google Drive by Mohd Sharib">
+                </lightning-carousel-image>
+            </div>
+            <div class="slds-align_absolute-center" if:true={gDriveLogo}>
+                <lightning-button variant="brand" label="Authorize" title="Primary action" onclick={handleClick}
+                    class="slds-m-left_x-small" style="margin-top: 12px;"></lightning-button>
+            </div>
+        </div>
+
+        <div if:true={afterAuthorization}>
+
+            <lightning-button icon-name="utility:back" label="Back" variant="destructive" title="Non-primary action"
+                onclick={handleBack} class="slds-m-left_x-small" style="margin-left: 1150px;"></lightning-button>
+
+            <lightning-card>
+                <h1 class="slds-align_absolute-center slds-text-heading_medium">Upload file upto 4 mb</h1>
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-input type="file" accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf"
+                        onchange={handleUploadFinished}></lightning-input>
+                </div>
+            </lightning-card>
+
+
+            <div class="slds-grid slds-gutters">
+
+                <!--RECORDS PER PAGE-->
+                <div class="slds-col">
+                   <div class="slds-list_inline slds-p-bottom_xx-small">
+                       <label class="slds-text-color_weak slds-p-horizontal_x-small"></label>
+                       <div class="slds-select_container">
+                           <select class="slds-select" onchange={handleFilePerPage}>
+                               <template for:each={pageSizeOptions} for:item="option">
+                                   <option key={option} value={option}>{option}</option>
+                               </template>
+                           </select>
+                       </div>
+                   </div>
+               </div>
+   
+               <!-- page navigation -->
+               <div class="slds-align_absolute-center slds-col" style="height:5rem">
+                   <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}></lightning-button>
+                   <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous" alternative-text="Previous" onclick={previousPage}></lightning-button>
+                   &nbsp;
+                   <span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;Page(s)</span>
+                   &nbsp;
+                   <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
+                   <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button>
+               </div>
+   
+               <div class="slds-clearfix slds-col">
+                   <div class="slds-float_right">
+                       <span class="slds-badge"> Total Files: {totalRecords}</span>
+                   </div>
+               </div>
+            </div>
+
+            <div class="margin: 25px, 0, 16px, 20px">
+                <lightning-button icon-name="utility:list" label="List view" title="Non-primary action"
+                    onclick={handleListView} class="slds-m-left_x-small"></lightning-button>
+                <lightning-button icon-name="utility:apps" label="Grid view" variant="brand" title="Non-primary action"
+                    onclick={handleGridView} class="slds-m-left_x-small"></lightning-button>
+            </div>
+
+            <div if:true={listView} class="slds-m-around_large">
+                <div>
+                    <lightning-datatable key-field="Id" data={recordsToDisplay} columns={columns} onrowaction={handleRowAction} hide-checkbox-column="true" show-row-number-column="true">
+                    </lightning-datatable>
+                </div>
+            </div>
+
+            <div if:true={gridView} class="slds-m-around_large">
+                <div class="slds-grid slds-wrap">
+                    <template for:each={recordsToDisplay} for:item="file">
+                        <div key={file.Id} class="slds-col slds-size_1-of-5">
+                            <div class="slds-card slds-size_small slds-p-around_medium"
+                                style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border: 1px solid rgb(214, 208, 208)">
+                                <div class="slds-card__header">
+                                </div>
+                                <div class="slds-card__body">
+                                    <lightning-tile style="height: 200px;">
+                                        <div class="slds-item_detail">
+                                            <h3 class="slds-text-heading_small slds-truncate"
+                                                style="margin-bottom: 11px">{file.title}</h3>
+                                        </div>
+                                        <div class="slds-list_horizontal slds-wrap">
+                                            <img src={file.thumbnailLink} alt="file preview" srcset=""
+                                                style="height: 110px">
+                                        </div>
+                                        <div>
+                                            <div style="margin-top: 20px;">
+                                                <lightning-button value={file.id} onclick={viewDetails}
+                                                    icon-name="utility:preview"></lightning-button>
+                                                <lightning-button value={file} onclick={downloadIcon}
+                                                    icon-name="utility:download"></lightning-button>
+                                            </div>
+                                        </div>
+                                    </lightning-tile>
+                                    <!-- Add other details from the datatable columns -->
+                                </div>
+                                <div class="slds-card__footer">
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+
+        </div>
+    </lightning-card>
+
+    <template if:true={showToastBar}>
+        <div class="slds-notify_container" style="margin-top: 40px;">
+            <div class={outerClass} role="status" style="height: 60px;">
+                <span class="slds-assistive-text">{type}</span>
+                <span class={innerClass} title={message} style="margin-top: 6px;">
+                    <lightning-icon icon-name={getIconName} alternative-text="icon" styleclass="slds-icon slds-icon_small" variant="inverse" size="small"></lightning-icon>
+                </span>
+                <div class="slds-notify__content">
+                    <h2 class="slds-text-heading_small">
+                        <lightning-formatted-rich-text value={message}>
+                        </lightning-formatted-rich-text>
+                    </h2>
+                </div>
+             
+                <div class="slds-notify__close">
+                    <lightning-button-icon icon-name="utility:close" size="small" variant="border-filled" class="slds-button slds-button_icon slds-button_icon-inverse" alternative-text="next" onclick={closeModel} ></lightning-button-icon>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

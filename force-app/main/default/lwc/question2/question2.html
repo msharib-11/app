@@ -1,0 +1,43 @@
+<template>
+    <lightning-card title="Account's contacts and opportunities">
+
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th>Account Name</th>
+                    <th>Contacts</th>
+                    <th>opportunities</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={Accounts} for:item="acc">
+                    <tr key={acc.id}>
+                        <td>{acc.Name}</td>
+                        <td>
+                            <select name="">
+                                
+                                    <template for:each={acc.Contacts} for:item="con">
+                                        <option value="" key={con.Id}>
+                                            {con.Name}
+                                        </option>
+                                    </template>
+                              
+                            </select>
+                        </td>
+                        <td>
+                            <select>
+                                
+                                    <template for:each={acc.Opportunities} for:item="op">
+                                        <option key={op.Id}>
+                                            {op.Name}
+                                        </option>
+                                    </template>
+                              
+                            </select>
+                        </td>
+                    </tr>
+                </template>
+              </tbody>
+        </table>
+    </lightning-card>
+</template>

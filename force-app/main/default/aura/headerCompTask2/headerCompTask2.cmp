@@ -1,0 +1,97 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="FetchingDetailsTask3Controller">
+    <aura:attribute name="userDetails" type="Map[]"/>
+    <aura:attribute name="show" type="boolean" default="false"/>
+
+    <aura:attribute name="btnval" type="string"/>
+
+    <lightning:messageChannel type="myMessageChannel__c" aura:id="samplemessage"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}"/>
+    <lightning:card>
+        <div class="slds-clearfix">
+            <div class="slds-float_left">
+                <a class=" slds-p-left_small" href="https://www.cloudanalogy.com/" target="_blank">
+                    <img src="{!$Resource.CloudAnalogyLogo}"
+                        alt="Cloud Analogy" style="width: 180px;"/>
+                </a>
+            </div>
+            <div class="slds-float_right">
+                <div>
+                    <div>
+                        <img src="{!v.userDetails[0].FullPhotoUrl}" alt="" class="slds-avatar slds-avatar_circle slds-float_right slds-m-right_medium"
+                        onclick="{!c.toggleIcon}"/>
+
+                    </div>
+                    <aura:renderIf isTrue="{!v.show}">
+                        <section aria-label="Dialog title" aria-describedby="popover-body-id"
+                            class="slds-dropdown slds-dropdown_medium slds-nubbin_top-right slds-m-top_x-large" role="dialog" style="left: 87%; margin-top: 40px;">
+                            <button
+                                class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-float_right slds-popover__close"
+                                title="Close dialog">
+                                <!-- <svg class="slds-button__icon" aria-hidden="true"> -->
+                                    <!-- <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use> -->
+                                <!-- </svg> -->
+                                <span class="slds-assistive-text">Close dialog</span>
+                            </button>
+                            <div class="slds-popover__body">
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-4">
+                                    <a href="">
+                                        <img src="{!v.userDetails[0].FullPhotoUrl}" alt="User" width="50px" style="border-radius: 50%;" class="slds-avatar slds-avatar_circle"/>
+                                    </a>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3 ">
+                                    <div>
+                                        <div>
+                                            <a href="">{!v.userDetails[0].Name}</a>
+                                        </div>
+                                        <div>
+                                            <a href="">{!v.userDetails[0].Email}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <lightning:button variant="Base" label="{!$Label.c.Edit + ' ' + $Label.c.User}" title="Brand action" onclick="{! c.handleClick }" class="slds-align_absolute-center"/>
+                            </div>
+                            <!-- <lightning-menu-divider></lightning-menu-divider>
+                            <div class="slds-grid slds-gutters slds-p-left_medium">
+                                <div class="slds-col">
+                                    <a href="">Change picture</a>
+                                </div>
+                                <div class="slds-col">
+                                    <a href="">Change password</a>
+                                </div>
+                                <div class="slds-col">
+                                    <a href="">Log out</a>
+                                </div>
+                            </div>
+                            <lightning-menu-divider></lightning-menu-divider>
+                            <div>
+                                <h4 class="slds-align_absolute-center">Notification</h4>
+                            </div>
+                            <lightning-menu-divider></lightning-menu-divider> -->
+
+
+                            <!-- <div>
+                            <h4 class="slds-align_absolute-center">Your personal pending leaves for approval - 0</h4>
+                        </div>
+                        <lightning-menu-divider></lightning-menu-divider>
+                            <div>
+                                <h4 class="slds-align_absolute-center">Alert of attendance limits</h4>
+                            </div>
+                        <lightning-menu-divider></lightning-menu-divider>
+                        <div>
+                            <h4 class="slds-align_absolute-center">You have no any alert notification for this months!</h4>
+                        </div> -->
+
+
+                        </section>
+                    </aura:renderIf>
+                </div>
+            </div>
+        </div>
+    </lightning:card>
+</aura:component>

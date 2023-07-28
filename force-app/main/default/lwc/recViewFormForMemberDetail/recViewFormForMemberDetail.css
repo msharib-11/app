@@ -1,0 +1,20 @@
+/* p{
+    padding-left: ;
+} */
+.slds-modal__title{
+    color: white;
+}
+.slds-modal__content{
+    background-color: white;
+}
+.slds-modal__header{
+    background-color: rgb(66, 65, 65);
+}
+h1{
+    font-family: sans-serif;
+    font-size: medium;
+    color: rgb(66, 65, 65);
+}
+p{
+    font-size: medium;
+}

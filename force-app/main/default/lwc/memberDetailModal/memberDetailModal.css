@@ -1,0 +1,106 @@
+img{
+height: 138px;
+}
+.scrollable{
+    scroll-snap-type: x mandatory ;
+    overflow-x: auto ;
+}
+.project_Div{
+    scroll-snap-align: start;
+}
+.eachDetailDiv{
+    margin-bottom: 5px;
+}
+b{
+    color: rgb(245, 243, 243);
+    text-transform: uppercase;
+    font-weight: bold !important;
+}
+.memberDetail_box{
+    background-color: rgb(54, 54, 54);
+    color: wheat;
+}
+.modal_header{
+    font-family: ui-monospace;
+    font-size:x-large;
+    color: white;
+    text-transform: uppercase;
+}
+header{
+    background-color: rgb(39, 39, 39) !important;
+}
+.projectHeading{
+    font-size:large;
+    font-family:serif !important;
+}
+.eachMemberClass{
+    transition: 0.5s;
+    border: solid;
+}
+.eachMemberClass:hover{
+    border: solid rgb(90, 90, 90);
+    box-shadow: 13px 13px 8px rgb(90, 90, 90) !important;
+}
+.project_Div{
+    background-color: rgb(39, 39, 39) ;
+}
+.Project_Name{
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.Project_Detail{
+    color: antiquewhite;
+}
+.forSmallScreen{
+    display: none;
+}
+@media only screen and (max-width: 655px) {
+
+b{
+    color: white;
+    font-size: smaller;
+}
+img{
+    height:91px;
+    border-radius: 50%;
+    border: solid black;
+}
+.forSmallScreen{
+    margin: 10px !important;
+    display: inline;
+}
+.memberName{
+    font-size: small;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+:is(.forBigScreen, .hideDetail){
+    display: none;
+}
+:is(.detail_div, .image_div){
+    width: 50% !important;
+}
+.eachDetailDiv{
+    margin: 2px;
+    width: 100%;
+}
+.project_Div{
+    scroll-snap-align: start;
+    margin: 2px;
+    width: 100%;
+}
+:is(.memberID, .memberProfile , .memberExperience){
+    font-size: smaller;
+    font-style: italic;
+}
+.slds-modal__container{
+    width: 90%;
+    height: 100% !important ;
+}
+}
+.slds-modal__container{
+    align-self:flex-start;
+    width: 90%;
+    height: 110%;
+}

@@ -1,0 +1,23 @@
+<template>
+    <lightning-card>
+        <div class="slds-m-top_medium slds-m-bottom_x-large">
+            <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+                calculate me!
+            </h2>
+    
+            <div class="slds-p-around_medium lgc-bg">
+                <lightning-input type="number" label="Enter first num" value={num1} onchange={handleNum1Change}></lightning-input>
+                <lightning-input type="number" label="Enter second num" value={num2} onchange={handleNum2Change}></lightning-input>
+            </div>
+            <div class="slds-button-group" role="group">
+                <button class="slds-button slds-button_neutral" onclick={addition}>Addition</button>
+                <button class="slds-button slds-button_neutral" onclick={subtraction}>Subtraction</button>
+                <button class="slds-button slds-button_neutral" onclick={multiplication}>Multiplication</button>
+                <button class="slds-button slds-button_neutral" onclick={division}>Division</button>
+                </div>
+        </div>
+        <div>
+            <h1>Result is : {res}</h1>
+        </div>
+    </lightning-card>
+</template>

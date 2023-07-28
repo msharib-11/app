@@ -1,0 +1,31 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<h6>This is a first aura component</h6>
+    <aura:attribute name = "var1" type="string" default="learnowx"/>
+    <aura:attribute name = "var2" type="string"/>
+    <h1>
+        component Attribute value : {!v.var2}
+    </h1>
+    <aura:attribute name = "var3" type="string"/>
+    <aura:handler name = "init" value="{!this}" action="{!c.doinit}"/>
+    <h1>
+        component att value : {!v.var3}
+    </h1>
+    
+    <aura:attribute name = "NewAcc" type="Account"
+                    default="{'sobjectType':'Account', 'Name':'TestAcc1'}"/>
+    <h1>
+        components att value : {!v.NewAcc.Name}
+    </h1>
+    
+    <aura:attribute name = "setDemo" type="Set" default = "['Dehradun', 'Dehradun', 'Mohali', 'Noida']"/>
+    <h1>
+        city name : {!v.setDemo[0]} <br/> {!v.setDemo[1]}
+    </h1>
+    
+    <aura:attribute name = "jsObject" type="object"/>
+    <aura:handler name = "init" value="{!this}" action="{!c.doinit1}"/>
+    <h1>
+        Name : {!v.jsObject.Name}<br/>
+        Age : {!v.jsObject.Age}
+    </h1>
+</aura:component>

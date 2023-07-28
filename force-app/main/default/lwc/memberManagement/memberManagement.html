@@ -1,0 +1,112 @@
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       : 
+  @author            : Suryabhan
+  @group             : 
+  @last modified on  : 07-24-2023
+  @last modified by  : Aditya Kumar Yadav
+-->
+<template>
+    <template if:true={showModal}>
+        <c-member-detail-modal class="childModal" onclosemodal={handleModalClose} member-id={selectedMembers}>
+        </c-member-detail-modal>
+    </template>
+    <template if:true={showEdit}>
+        <c-create-Record-Dynamically record-id={editRecordId} obj-label={objectLabel} oncancelcustomevent={handleClose}
+            onsavecustomeventbtn={handlRecordSave} obj-name={objectApiName} fset-name={fieldSetName}>
+        </c-create-Record-Dynamically>
+    </template>
+    <div class="slds-var-m-top_large">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_4-of-12">
+                <span><lightning-input max-length={maxSize} type="search" class="slds-var-p-left_small "
+                        onchange={handleSearch} placeholder="Search Member"></lightning-input>
+                    <p class="slds-text-color_error slds-var-m-around_medium slds-text-title_caps">
+                        {searchKeyErrorMessage}</p>
+                </span>
+            </div>
+            <div class="slds-col slds-size_6-of-12 freeSpace">
+                <span></span>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-var-m-top_medium Button">
+                <lightning-button variant="brand" label="View" title="Selected Records slds-var-p-top_xx-small" onclick={getSelectedRec}
+                    slot="actions">
+                </lightning-button>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-var-m-top_medium buttonIcon">
+                <lightning-button-icon class="buttonIcon slds-var-p-top_xx-small" icon-name="utility:preview" onclick={getSelectedRec}
+                    alternative-text="View Members"></lightning-button-icon>
+            </div>
+            <!-- // button layout change in mobile mode-->
+            <div class="slds-col slds-size_1-of-12 slds-var-m-top_medium">
+                <template if:true={defaultFields}>
+                    <span class="slds-var-p-top_xx-small"><c-field-display-dual-combobox all-fields={allFields} default-fields={defaultFields}
+                            onfieldselected={updateSelectedField}></c-field-display-dual-combobox></span>
+                 <!-- // button layout end -->
+                </template>
+            </div>
+        </div><br>
+
+        <!--TOTAL RECORDS-->
+        <div class="slds-clearfix">
+            <div class="slds-float_right">
+                <span class="slds-badge"> Total Members: {totalMembers}</span>
+            </div>
+        </div>
+        <div class="slds-var-m-around_medium slds-border_top slds-border_right slds-border_bottom slds-border_left">
+            <lightning-datatable data={memberToDisplay} class="slds-table_col-bordered" columns={columns} key-field="id"
+                sorted-by={sortBy} sorted-direction={sortDirection} onsort={doSorting} onrowaction={getActionIdHandler}>
+            </lightning-datatable>
+        </div>
+
+        <!-- <div>
+    <div class="slds-list_inline slds-p-top_large">
+        <label class="slds-text-color_weak " for="recordsPerPage">Page
+            Size:</label>
+        <div class="slds-select_container">
+            <select class="slds-select" id="recordsPerPage" onchange={handleRecordsPerPage}>
+                <template for:each={pageSizeOptions} for:item="option">
+                    <option key={option} value={option}>{option}</option>
+                </template>
+            </select>
+        </div>
+    </div>
+</div> -->
+
+        <!-- <lightning-combobox
+    name="progress"
+    label="Pages"
+    value={value}
+    placeholder="Select Page"
+    options={options}   
+    onchange={handleRecordsPerPage} >
+</lightning-combobox> -->
+
+
+
+
+<!-- // button layout change in mobile mode-->
+        <!--PAGE NAVIGATION-->
+        <div class="slds-align_absolute-center" style="height:5rem">
+            <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" variant="brand"
+                class="NavButton slds-p-horizontal_xx-small" alternative-text="first page" onclick={firstPage}></lightning-button>
+            <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous"
+                alternative-text="Previous" onclick={previousPage} class="NavButton" variant="brand"></lightning-button>
+            &nbsp;
+            <span class="slds-badge hideOnSmallScreen">Showing {pageNumber} &nbsp;of&nbsp; {totalPages}
+                &nbsp;&nbsp;Page(s)</span>
+            &nbsp;
+            <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" variant="brand"
+                alternative-text="Next" onclick={nextPage} class="NavButton slds-p-horizontal_xx-small" icon-position="right">
+            </lightning-button>
+            <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last"
+                alternative-text="last page" onclick={lastPage} icon-position="right" class="NavButton" variant="brand"></lightning-button>
+        </div>
+        <!-- // button layout change in mobile mode end-->
+        <div class="navForSmall slds slds-text-align_center">
+            <span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;Page(s)</span>
+            &nbsp;
+        </div>
+        
+    </div>
+</template>

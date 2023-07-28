@@ -1,0 +1,18 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="setselectedItem" type="string"/>
+    <aura:registerEvent name="sideEvent" type="c:sidebarEvent"/>
+
+    <lightning:messageChannel type="myMessageChannel__c"
+    onMessage="{!c.handleMessage}" />
+        <div>
+            <lightning:card>    
+                <lightning:verticalNavigation selectedItem="{!v.setselectedItem}" onselect="{!c.handleClick}">
+                    <lightning:verticalNavigationSection label="{!$Label.c.Sidebar}">
+                        <lightning:verticalNavigationItemIcon label="{!$Label.c.Dashboard}" name="dashInfo" iconName="standard:dashboard"/>
+                        <lightning:verticalNavigationItemIcon label="{!$Label.c.Contact}" name="ConInfo" iconName="standard:contact"/>
+                        <lightning:verticalNavigationItemIcon label="{!$Label.c.User_info}" name="userInfo" iconName="standard:user" />
+                    </lightning:verticalNavigationSection>
+                </lightning:verticalNavigation>
+            </lightning:card>
+        </div>
+</aura:component>

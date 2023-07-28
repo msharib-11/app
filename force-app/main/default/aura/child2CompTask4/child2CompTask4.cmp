@@ -1,0 +1,9 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    
+    <aura:attribute name="childValue" type="string"/>
+    <aura:registerEvent name="parentChildEvent" type="c:childParentEventTask4"/>
+    <lightning:card>
+        <h1>Child 2 component {!v.childValue}</h1>
+        <lightning:button label="child-parent" onclick="{!c.EventCompFire}"/>
+    </lightning:card>
+</aura:component>

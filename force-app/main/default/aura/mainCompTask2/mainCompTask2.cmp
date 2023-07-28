@@ -1,0 +1,49 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+
+    <!-- <aura:attribute name="dashboard" type="string" default="false"/> -->
+    <aura:attribute name="contact" type="boolean" default="false"/>
+    <aura:attribute name="user" type="boolean" default="false"/>
+    <!-- <aura:attribute name="message" type="string"/> -->
+
+    <!-- <aura:registerEvent name="dataTransfer" type="c:childParentEventTask4"/> -->
+
+
+    <aura:handler name="sideEvent" event="c:sidebarEvent" action="{!c.handleValue}"/>
+    
+    <lightning:card>
+        <div>
+            <span>
+                <c:headerCompTask2 aura:id="compHeader"/>
+            </span>
+        </div>
+        <!-- <lightning:button label="Send value to child" variant="brand" onclick="{! c.sendValue }" />
+
+        <h1>{!v.message}</h1> -->
+
+        <!-- <c:childCompTask4/> -->
+    
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-5">
+                <span>
+                    <c:sidebarCompTask2 aura:id="compSidebar"/>
+                </span>
+            </div>
+            <div class="slds-col slds-size_4-of-5">
+                <span>
+                    <aura:if isTrue="{!v.contact}">
+                        <c:ContactCompTask2 />
+                    </aura:if>
+                    <aura:if isTrue="{!v.user}">
+                        <c:UserinfoCompTask2 />
+                    </aura:if>
+                </span>
+            </div>
+        </div>
+        <div>
+            <span>
+                <c:footerCompTask2></c:footerCompTask2>
+            </span>
+        </div>
+    </lightning:card>
+
+</aura:component>

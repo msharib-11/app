@@ -1,0 +1,325 @@
+<template>
+    <lightning-card>
+        <template if:true={showToastBar}>
+            <div class="slds-notify_container">
+                <div class={outerClass} role="status">
+                    <span class="slds-assistive-text">{type}</span>
+                    <span class={innerClass} title={message}>
+                        <lightning-icon icon-name={getIconName} alternative-text="icon"
+                            styleclass="slds-icon slds-icon_small" variant="inverse" size="small"></lightning-icon>
+                    </span>
+                    <div class="slds-notify__content">
+                        <span class="slds-m-right_none">
+                            <h2 class="slds-text-heading_small ">
+                                <lightning-formatted-rich-text value={message}>
+                                </lightning-formatted-rich-text>
+                            </h2>
+                        </span>
+                    </div>
+
+                    <div class="slds-notify__close">
+                        <lightning-button-icon icon-name="utility:close" size="small" variant="border-filled"
+                            class="slds-button slds-button_icon slds-button_icon-inverse" alternative-text="next"
+                            onclick={closeModel}></lightning-button-icon>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+
+
+
+ 
+
+
+
+                <div class="search-bar">
+                    <!-- search bar -->
+                    <!-- class="slds-size_1-of-3 navbar-search" -->
+                    <lightning-input type="search"  placeholder="search by name..."
+                        variant="label-hide" onchange={handleSearch}></lightning-input>
+                </div>
+
+                <div>
+                    <lightning-button class="button-select" icon-name="utility:multi_select_checkbox" variant="brand"
+                        label={myLabel.Select_Resume} onclick={handleCheckbox}></lightning-button>
+                    <lightning-icon class="button-select-small" icon-name="utility:multi_select_checkbox"
+                        onclick={handleCheckbox}></lightning-icon>
+                </div>
+                <!-- <div class="navbar-button" if:true={showButton}><lightning-button variant="brand-outline" icon-name="utility:skip_back"  label="Cancel" onclick={handleCancel}></lightning-button></div> -->
+                <section aria-label="Dialog title" aria-describedby="popover-body-id"
+                    class="slds-popover slds-nubbin_top-right popoverSection slds-align_absolute-center" role="dialog"
+                    if:true={showButton}>
+
+                    <div id="popover-body-id" class="slds-popover__body">
+                        <!-- <div class="slds-align_absolute-center slds-m-left_x-small slds-docked-form-footer" >	 -->
+                        <ul class="ul-list">
+                            <li class="copy-btn slds-p-horizontal_medium"><lightning-icon
+                                    icon-name="utility:copy_to_clipboard" title="Copy to Clipboard!" label="Copy"
+                                    onclick={CopyAll}></lightning-icon></li>
+                            <li class="download-btn slds-p-horizontal_medium"><lightning-icon icon-name="doctype:pdf"
+                                    title="pdf" label="Download(.pdf)" onclick={generatePdf}></lightning-icon></li>
+                            <li class="download-btn slds-p-horizontal_medium"><lightning-icon icon-name="doctype:word"
+                                    title="doc" label="Download(.docx)" onclick={downloadDocx}></lightning-icon></li>
+                            <li class="download-btn slds-p-horizontal_medium"><lightning-icon icon-name="doctype:excel"
+                                    title="xlsx" label="Download(.xlsx)" onclick={downloadXl}></lightning-icon></li>
+                            <li class="download-btn slds-p-horizontal_medium"><lightning-icon icon-name="doctype:csv"
+                                    title="csv" label="Download(.csv)" onclick={downloadCsv}></lightning-icon></li>
+                        </ul>
+                        <!-- </div>	 -->
+                    </div>
+                </section>
+                <!-- <div class="slds-size_1-of-3"></div> -->
+
+                <!--Changes by Palak starts-->
+                    <div class="selected-count">
+                    Selected Resumes: {selectedResumesCount}
+                    </div>
+    
+
+
+
+
+
+        <!-- display component for resume data -->
+        <!-- <div class="slds-align_absolute-center slds-m-left_x-small" if:true={showSelectButton}>	
+            <lightning-button icon-name="utility:multi_select_checkbox" variant="brand" label="Select Resume" onclick={handleCheckbox} class="slds-m-left_x-small slds-size_x-small" stretch></lightning-button>	
+        </div>	
+        <div class="slds-align_absolute-center slds-m-left_x-small" if:true={showButton}><lightning-button variant="brand-outline" icon-name="utility:skip_back"  label="Cancel" onclick={handleCancel} class="slds-m-left_x-small slds-size_x-small" stretch></lightning-button></div> -->
+
+
+
+
+        <div>
+            <div class="slds-col slds-size_1-of-1">
+                <!-- display component for   resume data -->
+                <template lwc:if={resumeData}>
+                    <!-- VIEW TOGGLE BUTTONS -->
+                    <div class="table_view slds-size_1-of-1 slds-p-around_small">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-grid slds-gutters view_toggle_container">
+                                <div class={gridButton}>
+                                    <lightning-button label={myLabel.Grid} icon-name="utility:apps"
+                                        onclick={handleGrid}></lightning-button>
+                                </div>
+                                <div class={tableButton}>
+                                    <lightning-button label={myLabel.Table} icon-name="utility:table"
+                                        onclick={handleTable}></lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                        <template lwc:if={gridView}>
+                            <!-- GRID VIEW -->
+                            <div
+                                class="slds-grid slds-wrap slds-m-around_medium slds-p-around_small slds-m-horizontal_none slds-p-horizontal_none slds-align_absolute-center">
+                                <template for:each={resumeData} for:item="resume">
+                                    <div key={resume.Id}
+                                        class="resume-card slds-col slds-size_1-of-6 slds-large-size_1-of-6 slds-medium-size_1-of-4 slds-small-size_1-of-2 slds-x-small-size_1-of-2 slds-m-around_medium slds-box">
+                                        <lightning-tile type="media" class="tile">
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-1">
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col size-size_1-of-2">
+                                                            <lightning-input if:true={showCheckbox} type="checkbox"
+                                                                name={resume.Member__r.Name}
+                                                                experience={resume.Experience__c}
+                                                                link={resume.Resume_Link__c} id={resume.Id}
+                                                                expertise={resume.Expertise_Key__c}
+                                                                onchange={handleChange}></lightning-input>
+                                                        </div>
+                                                        <div class="slds-col size-size_1-of-2">
+                                                            <div class="slds-float_right slds-p-horizontal_small">
+                                                                <lightning-helptext
+                                                                    icon-name="utility:copy_to_clipboard"
+                                                                    content={showBar} dataid={resume.Id}
+                                                                    onclick={copyToClipboard}></lightning-helptext>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size_1-of-1 slds-p-horizontal_xx-large slds-p-top_medium slds-align_absolute-center">
+                                                    <img class="avatar_img" src={myResumeMemberIcon} alt="user">
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-1">
+                                                    <div class="slds-grid slds-wrap">
+                                                        <div
+                                                            class="slds-col slds-size_1-of-1 slds-align_absolute-center">
+                                                            <p class="member-name">{resume.Member__r.Name}</p>
+                                                        </div>
+                                                        <div
+                                                            class="slds-col slds-size_1-of-1 slds-align_absolute-center">
+                                                            <p class="member-profile">{resume.Member__r.Profile__c}</p>
+                                                        </div>
+                                                        <div class="divider"></div>
+                                                        <div
+                                                            class="slds-col slds-size_1-of-1 slds-align_absolute-center">
+                                                            <p class="member-experience">
+                                                                {resume.Experience__c}&ensp;{myLabel.yr_exp}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-1">
+                                                    <div
+                                                        class="slds-grid slds-wrap slds-align_absolute-center pill_container slds-p-around_medium">
+                                                        <template for:each={resume.Expertise_Key} for:item="key">
+                                                            <div key={key} class="expertise_pill">
+                                                                {key}
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-1">
+                                                    <div class="slds-align_absolute-center slds-p-bottom_medium">
+                                                        <a href={resume.Resume_Link__c} class="resume_anchor"
+                                                            target="_blank">
+                                                            <div class="resume_button slds-align_absolute-center">
+                                                                {myLabel.Resume}
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </lightning-tile>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                        <template lwc:if={tableView}>
+                            <!-- TABLE VIEW -->
+                            <div class="slds-p-around_large"></div>
+                            <div class="table_view slds-p-around_none slds-align_absolute-center">
+                                <table aria-multiselectable="true"
+                                    class="slds-table slds-table_bordered slds-table_resizable-cols myTable slds-scrollable_x"
+                                    role="grid"
+                                    aria-label="Example advanced table of Opportunities in actionable mode with all rows selected">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-align_right slds-cell_action-mode" scope="col"
+                                                style="width:3.25rem">
+                                                <span class="slds-assistive-text">Choose a row</span>
+                                                <div class="slds-th__action slds-th__action_form">
+                                                    <div class="slds-checkbox">
+                                                        <lightning-input type="checkbox" if:true={showCheckbox2}
+                                                            onchange={checkAll}></lightning-input>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <template for:each={columns} for:item="col">
+                                                <th aria-label="Name" aria-sort="none" class="slds-cell_action-mode"
+                                                    scope="col" key={col}>
+                                                    <a class="slds-th__action slds-text-link_reset" href="#"
+                                                        role="button" tabindex="0">
+                                                        <!-- <span class="slds-assistive-text">Sort by: </span>	 -->
+                                                        <div class="slds-grid slds-grid_vertical-align-center">
+                                                            <span title={col.label}
+                                                                class="slds-truncate">{col.label}</span>
+                                                        </div>
+                                                    </a> 
+                                                </th>
+                                            </template>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={resumeData} for:item="data">
+                                            <tr class="slds-hint-parent" key={data.Id}>
+                                                <td class="slds-text-align_right slds-cell_action-mode" role="gridcell">
+                                                    <div class="slds-checkbox">
+                                                        <lightning-input if:true={showCheckbox} type="checkbox"
+                                                            name={data.Member__r.Name} experience={data.Experience__c}
+                                                            link={data.Resume_Link__c} id={data.Id}
+                                                            expertise={data.Expertise_Key__c} checked={checkAllBox}
+                                                            onchange={handleChange}></lightning-input>
+                                                    </div>
+                                                </td>
+                                                <td class="slds-cell_action-mode" role="gridcell">
+                                                    <div title={data.Member__r.Name} class="slds-truncate">
+                                                        {data.Member__r.Name}</div>
+                                                </td>
+                                                <td class="slds-cell_action-mode" role="gridcell">
+                                                    <div title={data.Member__r.Profile__c} class="slds-truncate">
+                                                        {data.Member__r.Profile__c}</div>
+                                                </td>
+                                                <td class="slds-cell_action-mode" role="gridcell">
+                                                    <div title={data.Experience__c} class="slds-truncate">
+                                                        {data.Experience__c}</div>
+                                                </td>
+                                                <td class="slds-cell_action-mode" role="gridcell">
+                                                    <div title={data.Resume_Link__c} class="slds-truncate">
+                                                        <a href={data.Resume_Link__c}
+                                                            tabindex="0">{data.Resume_Link__c}</a>
+                                                    </div>
+                                                </td>
+                                                <td class="slds-cell_action-mode" role="gridcell">
+                                                    <div title={data.Expertise_Key} class="slds-truncate">
+                                                        {data.Expertise_Key}</div>
+                                                </td>
+                                                <td class="slds-cell_action-mode " role="gridcell">
+                                                    <lightning-helptext icon-name="utility:copy_to_clipboard"
+                                                        content={showBar} dataid={data.Id} onclick={copyToClipboard}
+                                                        class="slds-float_right"></lightning-helptext>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-grid slds-gutters">
+                        <!-- RECORDS PER PAGE PICKLIST -->
+                        <div
+                            class="slds-col slds-size_1-of-4 slds-large-size_1-of-4 slds-medium-size_1-of-4 slds-small-size_1-of-1 slds-x-small-size_1-of-1 slds-p-around_medium slds-align_absolute-center">
+                            <lightning-combobox dropdown-alignment="bottom-left" variant="label-hide" options={options}
+                                placeholder={myLabel.Records_per_page} onchange={handleRecordsPerPage}
+                                value={recordsPerPage}></lightning-combobox>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <!-- PAGINATION CONTROLLERS -->
+                        <div class="slds-grid slds-gutters slds-m-horizontal_medium">
+                            <div class="slds-col slds-size_1-of-4">
+                                <div class="slds-align_absolute-center">
+                                    <lightning-button-icon name="first" icon-name="utility:arrow_left" variant="brand"
+                                        onclick={handlePage} class="slds-p-around_xxx-small"></lightning-button-icon>
+                                    <lightning-button-icon name="previous" icon-name="utility:back" variant="brand"
+                                        onclick={handlePage} class="slds-p-around_xxx-small"></lightning-button-icon>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4 slds-align_absolute-center">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-p-horizontal_small page_number slds-size_1-of-1 slds-x-small-size_0-of-1"
+                                        lwc:ref="page_numers">
+                                        <template if:true={pages}>
+                                            <template for:each={pages} for:item="page">
+                                                <lightning-button key={page} id={page.value} label={page.label}
+                                                    class="slds-p-horizontal_none slds-border_top slds-border_bottom page_button slds-border_bottom page_button"
+                                                    name="custom_page" value={page.value} onclick={handlePage}
+                                                    disabled={page.disabled}></lightning-button>
+                                            </template>
+                                        </template>
+                                    </div>
+                                    <div class="mobile_view-page">{currentPage}/{totalPages}</div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <div class="slds-align_absolute-center">
+                                    <lightning-button-icon name="next" icon-name="utility:forward" variant="brand"
+                                        onclick={handlePage} class="slds-p-around_xxx-small"></lightning-button-icon>
+                                    <lightning-button-icon name="last" icon-name="utility:arrow_right" variant="brand"
+                                        onclick={handlePage} class="slds-p-around_xxx-small"></lightning-button-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <!-- ON ERROR -->
+                <template lwc:else>
+                    <div class="slds-p-around_large">
+                        <p class="slds-align_absolute-center">{myLabel.No_data_found}</p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

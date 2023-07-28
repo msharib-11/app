@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Create Account">
+        <div class="slds-var-p-around_x-small">
+            <lightning-input label="Account Name" onchange={handleNameChange}></lightning-input>
+            <lightning-input  label="Phone" onchange={handlePhoneChange}></lightning-input>
+            <br>
+            <lightning-button label="save" onclick={createAccRec}></lightning-button>
+            <p if:true={AccountId}>Account saved with {AccountId}</p>
+        </div>
+    </lightning-card>
+    
+</template>

@@ -1,0 +1,7 @@
+<template>
+    <lightning-input class="slds-p-bottom_large slds-p-right_medium" type="search" label="Search Contact" onchange={handleSearch}></lightning-input>
+    <lightning-datatable key-field="Id" data={availableAccounts} columns={getallContact} sorted-by={sortBy}
+        sorted-direction={sortDirection} onsort={doSorting} show-row-number-column="true"
+        onrowaction={handleRowAction}>
+    </lightning-datatable>
+</template>

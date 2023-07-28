@@ -1,0 +1,38 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card>
+        <lightning-layout>
+            <lightning-layout-item size="4">
+                <lightning-combobox
+                    name="progress"
+                    label="Status"
+                    value={value}
+                    placeholder="Select Progress"
+                    options={options}
+                    onchange={handleChange} >
+                </lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item size="4"><lightning-input class="slds-var-m-top_x-small" type="text" placeholder ="Search for a Project" onchange={handleSearch}></lightning-input></lightning-layout-item>
+            <lightning-layout-item size="4"></lightning-layout-item>
+        </lightning-layout>
+        <div class="slds-m-around_large slds-table_bordered slds-table_col-bordered slds-border_top slds-border_right slds-border_bottom slds-border_left slds-table_striped ">
+            <lightning-datatable key-field="id"
+                            data={availableData}
+                            columns={columns}
+                            sorted-by={sortBy} 
+                            sorted-direction={sortDirection}
+                            onsort={sortHandler}>
+            </lightning-datatable>
+        </div>
+        <br> 
+        <lightning-layout horizontal-align="center">
+            <lightning-layout-item >
+                <lightning-button class="slds-m-horizontal_x-small" label="&#x00AB; First" variant="brand-outline" name="first" onclick={paginationHanlder}></lightning-button>
+                <lightning-button class="slds-m-horizontal_x-small" label="&lt; Previous" variant="brand-outline" name="previous" disabled={disablePrevious} onclick={paginationHanlder}></lightning-button>
+                <lightning-button class="slds-m-horizontal_x-small" label="Next &gt;" variant="brand-outline" name="next" disabled={disableNext} onclick={paginationHanlder}></lightning-button>
+                <lightning-button class="slds-m-horizontal_x-small" label="Last &#x00BB;" variant="brand-outline" name="last" onclick={paginationHanlder}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+    
+</template>

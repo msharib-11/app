@@ -1,0 +1,20 @@
+.THIS {
+    background-color: white;
+}
+
+.THIS .createBtn {
+    margin-top: 20px;
+    margin-left: 22px;
+}
+
+.THIS .select{
+    width: 85px;
+    margin-bottom: 3px;
+    margin-left: 5px;
+}
+
+.THIS .selectContainer{
+    top: auto;
+    bottom: 7px;
+    left: 5px;
+}

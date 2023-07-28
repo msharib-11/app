@@ -1,0 +1,30 @@
+<aura:component controller="SalesforceGdriveIntegration" implements="flexipage:availableForAllPageTypes" access="Global">
+    <aura:attribute name="files" type="List" />
+    
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="fileToUpload" type="Blob" />
+    <aura:attribute name="fileName" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.fetchGoogleDriveFiles}" />
+
+    <lightning:fileUpload
+        label="Upload File"
+        multiple="false"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.png,.jpg,.jpeg"
+        onuploadfinished="{!c.handleFileUpload}"
+    />
+
+    <aura:if isTrue="{!not(empty(v.fileName))}">
+        <div>
+            <p>Uploaded File: {!v.fileName}</p>
+            <button onclick="{!c.uploadFile}">Upload</button>
+        </div>
+    </aura:if>
+
+
+
+    
+    <lightning:datatable data="{!v.files}" columns="{!v.columns}" keyField="id" hideCheckboxColumn="true" onrowaction="{!c.handleRowAction}"/>
+</aura:component>
+
+<!--aSasoiytfllp'iyjjuilhjhugjvhoi9775w5wwrqjj;oi074wtfbjo8y  data-file-id="{!file.id}"-->

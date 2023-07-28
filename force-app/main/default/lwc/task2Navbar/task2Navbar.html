@@ -1,0 +1,32 @@
+<template>
+    <div class="slds-context-bar">
+        <nav class="slds-context-bar__secondary" role="navigation">
+            <ul class="slds-grid">
+                <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click"
+                    data-id="Active" onclick={handleAllRecords}>
+                    <a href="#" class="slds-context-bar__label-action" title="Menu Item">
+                        <span class="slds-truncate" title="Active" data-id="Active">Active records</span>
+                    </a>
+                    <div class="slds-context-bar__icon-action slds-p-left_none">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button"
+                            aria-haspopup="true" title="Open menu item submenu">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown_right">
+                        <ul class="slds-dropdown__list" role="menu">
+
+                        </ul>
+                    </div>
+                </li>
+                <li class="slds-context-bar__item" data-id="InActive" onclick={handleAllRecords}>
+                    <a href="#" class="slds-context-bar__label-action" title="Menu Item">
+                        <span class="slds-truncate" title="Inactive" data-id="InActive">Inactive records</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</template>

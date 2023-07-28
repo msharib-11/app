@@ -1,0 +1,76 @@
+<template>
+ 
+    <div class="main"> 
+        <lightning-icon icon-name="utility:filterList" size="large" variant = "bare-inverse"  title="filter"  class="openbtn" onclick={openNav}></lightning-icon>
+
+        <!-- <button>&#9776;</button>  -->
+    </div>  
+    <div class="sidebar mySidebar" style="background-color: rgb(242, 250, 248); "> 
+        <a href="javascript:void(0)" class="closebtn" onclick={closeNav}>&times;</a>  
+        <lightning-vertical-navigation >
+            <!-- Lightning pill for applied filters  -->
+           
+            <template if:true={filterStatus}>
+                <div class="slds-grid slds-gutters slds-p-left_small slds-p-top_small">
+                    <div class="slds-text-heading_medium slds-p-left_small">Applied Filters</div>
+                    <div class="slds-m-left_small slds-m-right_xx-small">
+                        <lightning-button label={myLabels.clear} onclick={handleClearFilter}></lightning-button>
+                    </div>
+                    <div>
+                        <lightning-button label={myLabels.apply} variant="brand" onclick={handleApplyFilters}></lightning-button>
+                    </div>
+                </div>
+            </template>
+            <div class="slds-p-vertical_small">
+                <!-- Slider Pill (Experience)  -->
+                <template if:true={sliderPillShow}>
+                    <lightning-badge label={myLabels.exp}></lightning-badge>
+                    <lightning-pill class="slds-p-around_small slds-m-bottom_medium" label={sliderValue}
+                    onremove={handleSliderValueRemove}></lightning-pill>
+                </template>
+                <!-- Mulit Picklist Pills (Expertise)  -->
+                <template if:true={multiPickListPillShow}>
+                    <lightning-badge label={myLabels.expertise}></lightning-badge>
+                    <template for:each={_selectedMulti} for:item="v1">
+                        <lightning-pill class="slds-p-around_small slds-m-bottom_medium" key={v1} label={v1}
+                        value={v1} onremove={handle_selectedMultiRemove}></lightning-pill>
+                    </template>
+                </template>
+                <!-- Single Picklist Pills (Member's Profile)  -->
+                <template if:true={pickListPillShow}>
+                    <lightning-badge label={myLabels.profile}></lightning-badge>
+                    <lightning-pill class="slds-p-around_small slds-m-bottom_medium"
+                    label={selectedpicklist} onremove={handleSelectedpicklistRemove}></lightning-pill>
+                </template>
+            </div>
+            
+            <lightning-vertical-navigation-section icon-name="utility:filterList" label={myLabels.filters} >
+            <!-- slider for Experience  -->
+            <lightning-vertical-navigation-item label={myLabels.experience} name="Experience" onclick={handleExperience}></lightning-vertical-navigation-item>
+            <template if:true={experienceStatus}>
+                <div  class="slds-p-top_small slds-p-bottom_large slds-p-left_large range-hidden" style="background-color: rgb(242, 250, 248); ">
+                    <lightning-slider value={val} max="10" onchange={handleSliderChange}></lightning-slider>
+                </div>
+            </template>
+            <!-- MultiPicklist for Expertise  -->
+            <lightning-vertical-navigation-item label={myLabels.expertise} name="Expertise" onclick={handleExpertise}></lightning-vertical-navigation-item>
+            <template if:true={expertiseStatus}>
+                <lightning-combobox class="slds-p-bottom_large slds-p-left_large slds-p-right_large" name="Expertise" value={valueOfExpertise} placeholder={myLabels.select} options={optionsForExpertise} onchange={handelMultiSelectValueChange}></lightning-combobox>
+            </template>
+            <!-- PickList for Profile  -->
+            <lightning-vertical-navigation-item label={myLabels.profile} name="Profile" onclick={handleProfile}></lightning-vertical-navigation-item>
+            <template if:true={profileStatus}>
+                <div class="slds-p-bottom_large slds-p-left_large slds-p-right_large" style="background-color: rgb(242, 250, 248); ">
+                    <lightning-combobox name="Profile" value={value} placeholder={myLabels.select} options={optionsForProfile} onchange={handlePicklistSelect}></lightning-combobox>
+                </div>
+            </template>
+            
+
+            
+            
+        </lightning-vertical-navigation-section>
+    </lightning-vertical-navigation>
+</div>
+<!-- filter icon ends -->
+
+</template>

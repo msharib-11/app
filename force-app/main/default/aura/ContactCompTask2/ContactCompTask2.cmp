@@ -1,0 +1,223 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="GetContactDynamically">
+
+    <aura:attribute type="Object" name="ContList" />
+    <aura:attribute type="List" name="queryResults" />
+    <aura:attribute name="mycolumns" type="List" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="key" type="String" />
+    <aura:attribute name="sortedBy" type="String" default="Name" />
+    <aura:attribute name="sortedDirection" type="string" default="asc" />
+    <aura:attribute name="viewAction" type="boolean" default="false" />
+    <aura:attribute name="editAction" type="boolean" default="false" />
+    <aura:attribute name="recId" type="string" />
+    <aura:attribute name="CreateNewContact" type="boolean" default="false" />
+    <aura:attribute name="selTabId" type="string" />
+
+
+    <aura:attribute name="bDisableLast" type="Boolean" />
+
+    <aura:attribute name="pageSizeOptions" type="List" default="['5', '10', '20']" />
+    <aura:attribute name="records" type="List" />
+    <aura:attribute name="recordsToDisplay" type="List" />
+    <aura:attribute name="pageNumber" type="Integer" default="1" />
+    <aura:attribute name="totalPages" type="Integer" />
+    <aura:attribute name="pageSize" type="Integer" />
+    <aura:attribute name="totalRecords" type="Integer" default="0" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.fetchCon}" />
+
+    <!-- <h1>{!v.ContList.Id}</h1> -->
+    <!-- <h1>{!v.viewAction}</h1> -->
+
+    <lightning:card>
+
+        <lightning:tabset onselect="{!c.tabSelected}" selectedTabId="{!v.selTabId}">
+            <lightning:tab label="{!$Label.c.All_records}" id="All">
+            </lightning:tab>
+            <lightning:tab label="{!$Label.c.Active_records}" id="active">
+            </lightning:tab>
+            <lightning:tab label="{!$Label.c.Inactive_records}" id="inactive">
+            </lightning:tab>
+        </lightning:tabset>
+
+        <!-- pagination start  -->
+
+        <lightning:layout>
+            <lightning:layoutItem size="4">
+                <div>
+                    <div class="slds-list_inline slds-p-top_large">
+                        <label class="slds-text-color_weak" for="recordsPerPage">{!$Label.c.Page_Size}</label>
+                        <div class="slds-select_container selectContainer">
+                            <select class="slds-select select" id="recordsPerPage" onchange="{!c.handleRecordsPerPage}">
+                                <aura:iteration items="{!v.pageSizeOptions}" var="option">
+                                    <option value="{!option}">{!option}</option>
+                                </aura:iteration>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="6">
+                <lightning:input type="text" name="searchKey" aura:id="searchKey" onchange="{!c.searchKeyChange}"
+                    placeholder="Search" />
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="2" class="createBtn">
+                <lightning:button  variant="brand" label="{!$Label.c.Create +' '+$Label.c.Contact}" title="Primary action"
+                    onclick="{!c.handleClickNewCon}">
+                </lightning:button>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <lightning:datatable data="{!v.ContList}" columns="{!v.columns }" keyField="Id"
+            hideCheckboxColumn="false" onsort="{!c.sortColumn}" sortedBy="{!v.sortedBy}"
+            sortedDirection="{!v.sortedDirection}" onrowaction="{!c.handleRowAction}" />
+
+
+        <!--PAGE NAVIGATION-->
+        <div class="slds-align_absolute-center" style="height: 5rem;">
+            <lightning:button disabled="{!v.bDisableFirst}" iconName="utility:jump_to_left" label="{!$Label.c.First}"
+                class="slds-p-horizontal_x-small" onclick="{!c.firstPage}" />
+            <lightning:button disabled="{!v.bDisableFirst}" iconName="utility:chevronleft" label="{!$Label.c.Previous}"
+                onclick="{!c.previousPage}" />
+            &nbsp;
+            <span class="slds-badge">{!$Label.c.Showing} {!v.pageNumber} &nbsp;of&nbsp; {!v.totalPages} &nbsp;&nbsp;{!$Label.c.Pages}</span>
+            &nbsp;
+            <lightning:button disabled="{!v.bDisableLast}" iconName="utility:chevronright" label="{!$Label.c.Next}"
+                onclick="{!c.nextPage}" class="slds-p-horizontal_x-small" iconPosition="right" />
+            <lightning:button disabled="{!v.bDisableLast}" iconName="utility:jump_to_right" label="{!$Label.c.Last}"
+                onclick="{!c.lastPage}" iconPosition="right" />
+        </div>
+        <!--TOTAL RECORDS-->
+        <div class="slds-clearfix">
+            <div class="slds-float_right">
+                <span class="slds-badge">{!$Label.c.Total_Records}: {!v.totalRecords}</span>
+            </div>
+        </div>
+
+        <!-- View action button datatable  -->
+
+        <aura:if isTrue="{!v.viewAction}">
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                        <!-- <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg> -->
+                        <span class="slds-assistive-text">Cancel and close</span>
+                    </button>
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{!$Label.c.View +' '+$Label.c.Contact}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                        <lightning:recordViewForm recordId="{!v.recId}" objectApiName="Contact">
+                            <div class="slds-box">
+                                <lightning:outputField fieldName="Name" />
+                                <lightning:outputField fieldName="Email" />
+                                <lightning:outputField fieldName="Phone" />
+                                <lightning:outputField fieldName="ActiveCon__c" />
+                            </div>
+                        </lightning:recordViewForm>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button onclick="{!c.cancelView}" class="slds-button slds-button_neutral"
+                            aria-label="Cancel and close">{!$Label.c.Cancel}</button>
+                        <!-- <button class="slds-button slds-button_brand">Save</button> -->
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+
+        </aura:if>
+
+        <!-- Edit action in datatable  -->
+
+        <aura:renderIf isTrue="{!v.editAction}">
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                        <!-- <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg> -->
+                        <span class="slds-assistive-text">Cancel and close</span>
+                    </button>
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">{!$Label.c.Edit +' '+$Label.c.Contact}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+
+                        <lightning:recordEditForm recordId="{!v.recId}" objectApiName="Contact"
+                            onsuccess="{!c.handleEditSuccess}">
+                            <!-- <lightning-messages> </lightning-messages> -->
+
+                            <lightning:inputField fieldName="LastName" />
+                            <lightning:inputField fieldName="Email" />
+                            <lightning:inputField fieldName="Phone" />
+                            <div class="slds-modal__footer">
+
+                                <button onclick="{!c.cancelEdit}"
+                                    class="slds-button slds-button_neutral slds-m-top_medium slds-m-right_large  "
+                                    aria-label="Cancel and close">{!$Label.c.Cancel}</button>
+                                <lightning:button class="slds-m-top_medium slds-m-right_large " variant="brand"
+                                    type="submit" name="update" label="{!$Label.c.Update}">
+                                </lightning:button>
+
+                            </div>
+                        </lightning:recordEditForm>
+                    </div>
+
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+
+        </aura:renderIf>
+
+        <!-- create new contact -->
+
+        <aura:if isTrue="{!v.CreateNewContact}">
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                        <!-- <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg> -->
+                        <span class="slds-assistive-text">Cancel and close</span>
+                    </button>
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate">{!$Label.c.New +' '+$Label.c.Contact}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+
+                        <lightning:recordEditForm objectApiName="Contact" onsuccess="{!c.handleCreateSuccess}">
+                            <!-- <lightning-messages> </lightning-messages> -->
+
+                            <lightning:inputField fieldName="Email" />
+                            <lightning:inputField fieldName="LastName" />
+                            <lightning:inputField fieldName="Phone" />
+                            <!-- <lightning:inputField fieldName="ActiveCon__c"/> -->
+                            <!-- <div class="slds-modal__footer"> -->
+
+                            <button onclick="{!c.newConCancel}"
+                                class="slds-button slds-button_neutral slds-m-top_medium slds-m-right_large  "
+                                aria-label="Cancel and close">{!$Label.c.Cancel}</button>
+                            <lightning:button class="slds-m-top_medium slds-m-right_large " variant="brand"
+                                type="submit" name="update" label="{!$Label.c.Save}">
+                            </lightning:button>
+                            <!-- </div> -->
+                        </lightning:recordEditForm>
+                    </div>
+
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+
+        </aura:if>
+
+    </lightning:card>
+
+</aura:component>

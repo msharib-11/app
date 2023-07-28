@@ -1,0 +1,9 @@
+<template>
+    <lightning-card title="Sign in">
+        <lightning-input label="Username" onchange={handle1}></lightning-input>
+        <lightning-input label="Password" onchange={handle2}></lightning-input>
+
+        <lightning-button label="Sign in" onclick={Save}></lightning-button>
+        <p if:true={ContactName}>Succesfully signed in with {ContactName}</p>
+    </lightning-card>
+</template>

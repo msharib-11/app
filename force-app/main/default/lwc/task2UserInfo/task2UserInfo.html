@@ -1,0 +1,109 @@
+<template>
+    <div>
+        <lightning-card>
+            <template for:each={userObj} for:item="User">
+                <div key={User.Id}>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-text-heading_large slds-align_absolute-center slds-p-bottom_x-large">User
+                            Details</div>
+                        <!-- <div>
+                            <lightning-button icon-name="action:edit" title="Primary action" onclick={handleEditUser}
+                                class="slds-m-left_x-small slds-float_right slds-m-right_x-large"></lightning-button>
+                        </div> -->
+                    </div>
+                    <div class="slds-grid slds-gutters" style="width: 850px">
+
+                        <!-- user view form  -->
+                        <lightning-record-view-form record-id={User.Id} object-api-name="User"
+                            class="slds-align_absolute-center">
+                            <lightning-messages></lightning-messages>
+                            <div class="slds-box" style="width: 120%">
+                                <div class="slds-grid slds-gutters">
+                                    <div>
+                                        <a href="">
+                                            <img src={User.FullPhotoUrl} alt="User" width="150px"
+                                                style="border-radius: 5%;">
+                                        </a>
+                                    </div>
+                                    <div class="slds-m-horizontal_xxx-medium" style="padding-left: 20px;">
+                                        <lightning-output-field field-name="Email"></lightning-output-field>
+                                        <lightning-output-field field-name="Name"></lightning-output-field>
+                                        <lightning-output-field field-name="City"></lightning-output-field>
+                                        <lightning-output-field field-name="Country"></lightning-output-field>
+                                    </div>
+                                    <div class="slds-m-horizontal_xxx-medium" style="padding-left: 20px;">
+                                        <lightning-output-field field-name="MobilePhone"></lightning-output-field>
+                                        <lightning-output-field field-name="CompanyName"></lightning-output-field>
+                                        <lightning-output-field field-name="State"></lightning-output-field>
+                                        <lightning-output-field field-name="PostalCode"></lightning-output-field>
+                                    </div>
+                                    <div>
+                                        <!-- <div>
+                                            <lightning-button icon-name="action:edit" title="Primary action"
+                                                onclick={handleEditUser}
+                                                class="slds-m-left_x-small slds-float_right slds-m-right_x-large">Edit</lightning-button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div>
+                                    <lightning-button icon-name="action:edit" title="Primary action"
+                                        onclick={handleEditUser}
+                                        class="slds-m-left_x-small slds-m-right_x-large slds-align_absolute-center">Edit</lightning-button>
+                                </div>
+                            </div>
+                        </lightning-record-view-form>
+                        <!-- user view end -->
+
+                    </div>
+
+                    <!-- user edit form  -->
+                    <template if:true={editStatus}>
+                        <section role="dialog" tabindex="-1" aria-modal="true"
+                            aria-label="Meaningful description of the modal content"
+                            class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <div class="slds-modal__header">
+                                    <h1 class="slds-modal__title slds-hyphenate" tabindex="-1">Edit
+                                        User</h1>
+                                </div>
+                                <div class="slds-modal__content slds-p-around_medium slds-modal__content_headless">
+                                    <div class="slds-p-bottom_large slds-p-horizontal_large">
+                                        <lightning-record-edit-form record-id={User.Id} object-api-name="User">
+                                            <lightning-messages></lightning-messages>
+                                            <div class="slds-box">
+                                                <lightning-output-field field-name="Email"></lightning-output-field>
+                                                <lightning-input-field field-name="FirstName"></lightning-input-field>
+                                                <lightning-input-field field-name="LastName"></lightning-input-field>
+                                                <lightning-input-field field-name="MobilePhone"></lightning-input-field>
+                                                <lightning-input-field field-name="CompanyName"></lightning-input-field>
+                                                <lightning-input-field field-name="City"></lightning-input-field>
+                                                <lightning-input-field field-name="State"></lightning-input-field>
+                                                <lightning-input-field field-name="Country"></lightning-input-field>
+                                                <lightning-input-field field-name="PostalCode"></lightning-input-field>
+                                            </div>
+                                            <div class="slds-clearfix slds-align_absolute-center">
+                                                <lightning-button variant="Neutral" label="Cancel"
+                                                    class="slds-m-top_medium slds-float_left slds-p-horizontal_medium"
+                                                    onclick={handleCancelUserEdit}></lightning-button>
+                                                <lightning-button variant="Brand" type="submit" label="Update"
+                                                    class="slds-m-top_medium slds-float_right slds-p-horizontal_medium"
+                                                    onclick={handleUpdateUser}></lightning-button>
+                                            </div>
+                                        </lightning-record-edit-form>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                    </template>
+                    <!-- user edit form end  --------------------- -->
+
+
+
+
+
+                </div>
+            </template>
+        </lightning-card>
+    </div>
+</template>

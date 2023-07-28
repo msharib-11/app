@@ -1,0 +1,7 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <lightning:card>
+        <div class="slds-align_absolute-center">
+            <h1>{!$Label.c.Cloudanalogy_com}</h1>
+        </div>
+    </lightning:card>
+</aura:component>

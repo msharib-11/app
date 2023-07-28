@@ -1,0 +1,22 @@
+.Button{
+    --sds-c-button-brand-color-background: #000000;
+    --sds-c-button-text-color: #feffff;
+    transition: transform .2s;
+    border-radius: 10px;
+}
+.Button:hover{
+    transform: scale(1.1);
+    --sds-c-button-brand-color-background-hover: #000000;
+    --sds-c-button-text-color: #feffff;
+}
+.buttonIcon{
+    display: none;
+}
+@media only screen and (max-width: 1000px) {
+    .Button{
+        display: none;
+    }
+    .buttonIcon{
+        display: block;
+    }
+}

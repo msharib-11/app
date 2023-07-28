@@ -1,0 +1,58 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card>
+        <template if:true ={selectToSend}>
+        </template>
+        <lightning-button class="slds-m-right_medium slds-float_right" title="Primary action" variant="brand" label="Export" onclick={getSelectedRec}></lightning-button>
+        <br/><br/> 
+        <lightning-datatable key-field="id"
+                             data={tableData}
+                             columns={columns}
+                             name={objectApiName}
+                             onrowaction={callRowAction}>
+        </lightning-datatable>
+<!-- Dynamic Modal for record edit form of Member details or project-->
+        <template if:true={displayEditForm}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Cancel and close</span>
+                    </button>
+                    <div class="slds-modal__header">
+                        <h1 class="slds-modal__title slds-hyphenate">Edit</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName}
+                            onsuccess={handleSuccess}>
+                            <lightning-messages>
+                            </lightning-messages>
+                            <template for:each={listOfFieldsFromFieldset} for:item="element">
+                            <lightning-output-field key={element.id} field-name="Id">
+                            </lightning-output-field>
+                            <lightning-input-field key={element.id} field-name={element.fieldPath}>
+                            </lightning-input-field>
+                            </template>
+                            <div class="slds-modal__footer">
+                                <button class="slds-button slds-button_neutral slds-m-right_xx-small"
+                                    aria-label="Cancel and close" onclick={handleClose}>Back</button>
+                                <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update"
+                                    label="Update" onclick={handleSubmit}>
+                                </lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <!-- Modal for record edit form of Member details /closing-->
+
+        <template if:true={displayViewForm}>
+            <c-view-modal-for-member-details onclosemodal={modalCloseHandler} columns={memberDetailColumns} ></c-view-modal-for-member-details>
+        </template>
+    </lightning-card>
+</template>

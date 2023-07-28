@@ -1,0 +1,18 @@
+<template>
+    <lightning-card>
+        <lightning-input label="Enter Account" onchange={handleChange}></lightning-input>
+    <template if:true={Account.data}>
+        <template for:each={Account.data} for:item="acc">
+            <lightning-layout key={acc.Id}>
+                <li>
+                    {acc.Id} 
+                    {acc.Name}
+                </li></lightning-layout>
+        </template>
+    </template>
+    <template if:true={Account.error}>
+       {Account.error}
+    </template>
+
+    </lightning-card>
+</template>

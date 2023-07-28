@@ -1,0 +1,69 @@
+<template>
+  <!-- <lightning-button variant="brand" label="Open Form" onclick={handleButtonClick}></lightning-button> -->
+  <template if:true={showForm}>
+    <!-- Your form component goes here -->
+    <!-- Use Lightning input fields or custom input components -->
+
+    <div class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <h2 class="slds-text-heading_medium">New {searchObj}</h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium">
+          <!-- Your form fields go here -->
+          <!-- Use Lightning input fields or custom input components -->
+          <div style="padding: 0 0 0 10px;">
+            <lightning-layout horizontal-align="center">
+              <lightning-layout-item size="6">
+                <lightning-input style="padding: 15px;" placeholder="Name" label="Name" type="text" onchange={handleChangeName} required=""></lightning-input>
+              </lightning-layout-item>
+              <lightning-layout-item size="6">
+                <lightning-input style="padding: 15px;" placeholder="Birthdate" label="BirthDate" type="date" onchange={handleChangeDate} required=""></lightning-input>
+              </lightning-layout-item>
+            </lightning-layout>
+          </div>
+          
+          <div style="padding: 0 0 0 25px;">
+            <lightning-input label="Active" type="checkbox" onchange={handleChangeCheckbox} ></lightning-input>
+            <br>
+            
+            <label for="select-01">Gender</label><br>
+            <select class="slds-select" id="select-01" onchange={handleChangeActive}>
+                <option value="">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select> 
+            <br>
+          </div>
+
+          <div style="padding: 15px 0 0 25px;">
+            <lightning-input label="Creation Date Time" type="datetime" onchange={handleChangeDatetime}></lightning-input>
+            <br>
+          </div>
+          
+          <div style="padding: 0 0 0 25px;">
+            <div class="slds-p-raound_xx-small">
+              <lightning-combobox name="Working In" label="Working In" value={value} options={options} onchange={handleMultiChange}></lightning-combobox>
+            </div>
+            <div class="slds-p-raound_xx-small">
+              <template for:each={allValues} for:item="val">
+                <lightning-pill key={val} name={val} label={val} onremove={handleRemove}></lightning-pill>
+              </template>
+            </div>
+          </div>
+          
+
+          <!-- <h1>{searchObj}</h1>
+          <h1>{searchVal}</h1> -->
+          <!-- {strAccObj}
+          {strConObj} -->
+        </div>
+        <footer class="slds-modal__footer">
+          <button style="width: 95px; height: 35px" class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+          <button style="width: 95px; height: 35px" class="slds-button slds-button_brand" onclick={handleSave}>Save</button>
+        </footer>
+      </div>
+    </div>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+</template>

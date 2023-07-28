@@ -1,0 +1,27 @@
+<template>
+    <lightning-card>
+        <div>
+            <span>
+                <c-task2-header ongetbtnvalue={getBtnValue}></c-task2-header>
+            </span>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-5">
+                <span>
+                    <c-task-2-listview-sidebar set-parent-value={setvalue} ongetvalue={getValue} onbackval={getbackvalue}></c-task-2-listview-sidebar>
+                </span>
+            </div>
+            <div class="slds-col slds-size_4-of-5">
+                <span if:true={contactRecord}>
+                    <c-task-2-body-contact></c-task-2-body-contact>
+                </span>
+                <span if:true={userInfo}>
+                    <c-task-2-user-info></c-task-2-user-info>
+                </span>
+                <!-- <span if:true={dashBoard}>    <c-task-2-dashboard></c-task-2-dashboard>
+                </span> -->
+            </div>
+        </div>
+    </lightning-card>
+
+</template>

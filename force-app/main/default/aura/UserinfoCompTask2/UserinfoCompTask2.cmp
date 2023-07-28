@@ -1,0 +1,96 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="FetchingDetailsTask3Controller">
+    <aura:attribute name="userInfo" type="Map[]" />
+    <aura:attribute name="editStatus" type="boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <div>
+        <lightning:card>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-text-heading_large slds-align_absolute-center slds-p-bottom_x-large">
+                    {!$Label.c.User_Details}</div>
+            </div>
+            <div class="slds-grid slds-gutters">
+
+                <!-- user view form  -->
+                <lightning:recordViewForm recordId="{!v.userInfo[0].Id}" objectApiName="User"
+                    class="slds-align_absolute-center">
+
+                    <div class="slds-box" style="width: 120%">
+                        <div class="slds-grid slds-gutters">
+                            <div>
+                                <a href="">
+                                    <img src="{!v.userInfo[0].FullPhotoUrl}" alt="User" style="border-radius: 5%" />
+                                </a>
+                            </div>
+                            <div class="slds-m-horizontal_xxx-medium" style="padding-left: 20px;">
+                                <lightning:outputField fieldName="Email" />
+                                <lightning:outputField fieldName="Name" />
+                                <lightning:outputField fieldName="City" />
+                                <lightning:outputField fieldName="Country" />
+                            </div>
+                            <div class="slds-m-horizontal_xxx-medium" style="padding-left: 20px;">
+                                <lightning:outputField fieldName="MobilePhone" />
+                                <lightning:outputField fieldName="CompanyName" />
+                                <lightning:outputField fieldName="State" />
+                                <lightning:outputField fieldName="PostalCode" />
+                            </div>
+                            <div>
+                                <!-- <div>
+                                    <lightning-button icon-name="action:edit" title="Primary action"
+                                        onclick={handleEditUser}
+                                        class="slds-m-left_x-small slds-float_right slds-m-right_x-large">Edit</lightning-button>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div>
+                            <lightning:button iconName="action:edit" title="Primary action"
+                                onclick="{!c.handleEditUser}" class=" slds-align_absolute-center" />
+                        </div>
+                    </div>
+                </lightning:recordViewForm>
+                <!-- user view end -->
+
+
+
+                <aura:if isTrue="{!v.editStatus}">
+                    <section role="dialog" tabindex="-1" aria-modal="true"
+                        aria-label="Meaningful description of the modal content" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <div class="slds-modal__header">
+                                <h1 class="slds-modal__title slds-hyphenate" tabindex="-1">{!$Label.c.Edit + ' ' +
+                                    !$Label.c.User}
+                                </h1>
+                            </div>
+                            <div class="slds-modal__content slds-p-around_medium slds-modal__content_headless">
+                                <div class="slds-p-bottom_large slds-p-horizontal_large">
+                                    <lightning:recordEditForm recordId="{!v.userInfo[0].Id}" objectApiName="User"
+                                        onsuccess="{!c.handleSuccess}">
+                                        <!-- <lightning-messages></lightning-messages> -->
+                                        <div class="slds-box">
+                                            <lightning:outputField fieldName="Email" />
+                                            <lightning:inputField fieldName="FirstName" />
+                                            <lightning:inputField fieldName="LastName" />
+                                            <lightning:inputField fieldName="MobilePhone" />
+                                            <lightning:inputField fieldName="CompanyName" />
+                                            <lightning:inputField fieldName="City" />
+                                            <lightning:inputField fieldName="State" />
+                                            <lightning:inputField fieldName="Country" />
+                                            <lightning:inputField fieldName="PostalCode" />
+                                        </div>
+                                        <div class="slds-clearfix slds-align_absolute-center">
+                                            <lightning:button variant="Neutral" label="Cancel"
+                                                class="slds-m-top_medium slds-float_left slds-p-horizontal_medium"
+                                                onclick="{!c.handleCancelUserEdit}" />
+                                            <lightning:button variant="Brand" type="submit" label="Update"
+                                                class="slds-m-top_medium slds-float_right slds-p-horizontal_medium" />
+                                        </div>
+                                    </lightning:recordEditForm>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                </aura:if>
+            </div>
+        </lightning:card>
+    </div>
+</aura:component>

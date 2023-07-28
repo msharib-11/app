@@ -1,0 +1,15 @@
+<template>
+    <lightning-card>
+        <div style="width: 200px;">
+            <lightning-vertical-navigation selected-item={setselectedItem} onclick={handleClick}>
+                <lightning-vertical-navigation-section label="sidebar"> 
+                    <!-- label="Reports" -->
+                    <!-- <lightning-vertical-navigation-item-icon label="Dashboard" name="Dashboard" icon-name="standard:dashboard"></lightning-vertical-navigation-item-icon> -->
+                    <!-- <lightning-vertical-navigation-item-icon label="My Profile" name="profile" icon-name="standard:avatar"></lightning-vertical-navigation-item-icon> -->
+                    <lightning-vertical-navigation-item-icon label="Contact" name="ConInfo" icon-name="standard:account_info"></lightning-vertical-navigation-item-icon>
+                    <lightning-vertical-navigation-item-icon label="User Info" name="UserInfo" icon-name="standard:user"></lightning-vertical-navigation-item-icon>
+                </lightning-vertical-navigation-section>
+            </lightning-vertical-navigation>
+        </div>
+    </lightning-card>
+</template>

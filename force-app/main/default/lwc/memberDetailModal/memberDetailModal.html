@@ -1,0 +1,161 @@
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       :
+  @author            : Aditya Kumar Yadav
+  @group             :
+  @last modified on  : 07-24-2023
+  @last modified by  : Aditya Kumar Yadav
+-->
+<template>
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+		aria-describedby="modal-content-id-1" class="size slds-modal slds-fade-in-open">
+		<div class="slds-modal__container">
+			<!-- modal header start -->
+			<header class="slds-modal__header">
+				<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+					onclick={hideModalBox}>
+					<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+						size="small"></lightning-icon>
+					<span class="slds-assistive-text">Close</span>
+				</button>
+				<h2 id="modal-heading-01" class="modal_header slds-text-heading_medium slds-hyphenate">
+					Member Details</h2>
+			</header>
+
+			<!-- modal body start -->
+			<div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+				<template if:false={memberDetail}>
+					<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+				</template>
+				<template if:true={memberDetail}>
+					<template for:each={memberDetail} for:item="eachMember">
+						<lightning-layout multiple-rows="true" class="slds-box slds-var-m-around_medium eachMemberClass"
+							key={eachMember.memberDetail.Id}>
+							<lightning-layout-item class="slds-box slds-text-align_center slds-truncate image_div"
+								size="4">
+								<img height="60px" src={memberIcon}> <br>
+								<div class="forSmallScreen">
+									<template if:true={eachMember.memberDetail.Name}>
+										<span class="memberName ">{eachMember.memberDetail.Name}</span><br>
+									</template>
+									<template if:true={eachMember.memberDetail.CA_ID__c}>
+										<span
+											class="memberID slds-text-align_center">({eachMember.memberDetail.CA_ID__c})</span><br>
+									</template>
+									<template if:true={eachMember.memberDetail.Profile__c}>
+										<span
+											class="memberProfile slds-text-align_center">{eachMember.memberDetail.Profile__c}</span><br>
+									</template>
+									<span class="memberExperience slds-text-align_center" title='Experience'>Exp:
+										{eachMember.memberDetail.Resume_Experience__c}yrs</span>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item class="slds-box memberDetail_box detail_div" size="8">
+								<lightning-layout multiple-rows="true" class="slds-var-p-bottom_small forBigScreen">
+									<lightning-layout-item size=4 class="slds-truncate">
+										<p class="slds-text-align_center">
+											<b>Name:</b><br>{eachMember.memberDetail.Name}
+										</p>
+									</lightning-layout-item>
+									<lightning-layout-item size=4 class="slds-truncate">
+										<p class="slds-text-align_center ">
+											<b>Experience:</b><br>{eachMember.memberDetail.Resume_Experience__c}
+											Years
+										</p>
+									</lightning-layout-item>
+									<lightning-layout-item size=4 class="slds-truncate">
+										<p class="slds-text-align_center"><b>Profile:</b><br>
+											<template if:true={eachMember.memberDetail.Profile__c}>
+												{eachMember.memberDetail.Profile__c}
+											</template>
+										</p>
+									</lightning-layout-item>
+								</lightning-layout>
+								<lightning-layout multiple-rows="true">
+									<lightning-layout-item size=4 class="eachDetailDiv slds-truncate">
+										<p class="slds-text-align_center"><b>TL Name:</b><br>
+											<template if:true={eachMember.memberDetail.TL_Lead__c}>
+												{eachMember.memberDetail.TL_Lead__r.Name}
+											</template>
+											<template if:false={eachMember.memberDetail.TL_Lead__c}>
+												Not Assigned
+											</template>
+										</p>
+									</lightning-layout-item>
+									<lightning-layout-item size=4 class="eachDetailDiv slds-truncate">
+										<p class="slds-text-align_center"><b>Manager Name:</b><br>
+											<template if:true={eachMember.memberDetail.Manager__c}>
+												{eachMember.memberDetail.Manager__r.Name}
+											</template>
+											<template if:false={eachMember.memberDetail.Manager__c}>
+												Not Assigned
+											</template>
+										</p>
+									</lightning-layout-item>
+									<lightning-layout-item size=4 class="eachDetailDiv slds-truncate hideDetail">
+										<p class="slds-text-align_center"><b>PC/PM Name:</b><br>
+											<template if:true={eachMember.memberDetail.PC_PM__c}>
+												{eachMember.memberDetail.PC_PM__r.Name}
+											</template>
+											<template if:false={eachMember.memberDetail.PC_PM__c}>
+												Not assigned
+											</template>
+										</p>
+									</lightning-layout-item>
+									<lightning-layout-item size=4 class="eachDetailDiv slds-truncate">
+										<p class="slds-text-align_center"><b>Billing
+												Hour:</b><br>{eachMember.totalBillingHours} Hours
+										</p>
+									</lightning-layout-item>
+									<lightning-layout-item size=4 class="eachDetailDiv slds-truncate">
+										<p class="slds-text-align_center ">
+											<b>Real Hours:</b><br>{eachMember.totalRealHours} Hours
+										</p>
+									</lightning-layout-item>
+									<lightning-layout-item size=4 class="eachDetailDiv slds-truncate hideDetail">
+										<p class="slds-text-align_center"><b>CA
+												ID:</b><br>{eachMember.memberDetail.CA_ID__c}
+										</p>
+									</lightning-layout-item>
+
+								</lightning-layout>
+							</lightning-layout-item>
+							<lightning-layout-item size="12">
+								<p
+									class="slds-var-m-around_medium slds-text-title_bold slds-text-align_center projectHeading">
+									PROJECTS</p>
+								<div class="scrollable">
+									<lightning-layout>
+										<template for:each={eachMember.memberDetailWithProject} for:item="eachProject">
+											<lightning-layout-item key={eachProject.Id} class="slds-box project_Div"
+												size="6">
+												<p
+													class="Project_Name slds-text-align_center slds-truncate slds-var-m-bottom_medium">
+													{eachProject.Project__r.Name}<br>
+													<template if:true={eachProject.Project__r.PC_PM_Name__c}>
+														MANAGER:- {eachProject.Project__r.PC_PM_Name__r.Name}
+													</template>
+												</p>
+												<lightning-layout class="slds-text-align_center">
+													<lightning-layout-item class="Project_Detail" size="6">
+														REAL HOURS<br>{eachProject.Real_used_hours__c} Hours
+													</lightning-layout-item>
+													<lightning-layout-item class="Project_Detail" size="6">
+														BILLING HOURS<br>{eachProject.Billing_Hours__c} Hours
+													</lightning-layout-item>
+												</lightning-layout>
+											</lightning-layout-item>
+										</template>
+									</lightning-layout>
+								</div>
+							</lightning-layout-item>
+						</lightning-layout>
+						<!-- </div> -->
+					</template>
+				</template>
+			</div>
+
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</template>

@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="childValue" type="string"/>
+    <aura:attribute name="parentValue" type="string"/>
+</aura:event>

@@ -1,0 +1,33 @@
+<apex:page showHeader="false" sidebar="false">
+    <apex:includeLightning />
+    
+    <div id="componentbodyid"/>
+    <div id="componentfooterid"/>
+    <script>
+    //$Lightning.use("c:auraAppTask2", function() {
+    //$Lightning.createComponent("c:task2Header",{
+    // },
+    // "componentid",
+    //function(cmp){
+    // console.log('Added to vf page');
+    //});
+    // });
+    
+        $Lightning.use("c:auraAppTask2", function() {
+        	$Lightning.createComponent("c:task2Body",{
+                },
+                "componentbodyid",
+                function(cmp){
+                    console.log('Added to vf page');
+                });
+        });
+    	$Lightning.use("c:auraAppTask2", function() {
+        	$Lightning.createComponent("c:task2Footer",{
+                },
+                "componentfooterid",
+                function(cmp){
+                    console.log('Added to vf page');
+                });
+        });
+    </script>
+</apex:page>

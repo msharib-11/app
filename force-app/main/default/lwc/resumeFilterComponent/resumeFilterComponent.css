@@ -1,0 +1,65 @@
+.sidebar {
+      height: 100%; 
+      width: 0px;
+      position: fixed; 
+      z-index: 4; 
+      top: 0;
+      left: 0;
+      background-color:  rgb(242 250 248);/* Black*/
+      overflow-x: scroll; 
+      padding-top: 60px; 
+      transition: 0.5s;
+    }
+    .sidebar a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: rgb(55 43 118);
+      display: block;
+      transition: 0.3s;
+    }
+    
+     .sidebar a:hover {
+      color: #b4b4b4;
+    }
+    
+     .sidebar .closebtn {
+      position: absolute; 
+      top: -10px;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+    .openbtn { 
+      display: inline; 
+      top: 4.5rem;
+      height: 50px;
+      left: 0;
+      z-index: 2;
+      position: fixed;
+      cursor: pointer;
+      transition: 0.5s;
+      border-radius: 25%;
+      background-color: #000000;
+      color: #ffffff;
+      padding: 10px 15px;
+      border: none;
+      }
+      
+      .openbtn:hover {
+      background-color: rgb(48, 48, 48);
+      }
+     .main {
+      transition: margin-left .5s;
+      padding: 0;
+      margin-left: 0;
+    }
+    .applyFilterHeading{
+      padding-left: 10px;
+    }
+    .clearButton{
+      left: 10px;
+    }
+    .applyButton{
+      left: 20px;
+    }

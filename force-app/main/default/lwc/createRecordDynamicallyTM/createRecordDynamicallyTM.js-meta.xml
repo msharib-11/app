@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightningCommunity__Default">
+            <property name="objectOptions" type="String" default='{"Member":"Contact","Resume":"Resume__c","Project":"Project__c","Member Details":"Member_Details__c"}' label="Enter Objects" description="Please enter object with there api name in JSON formate"/>
+            <property name="objectDescription" type="String" default='{"Member":"Click to create a new Member record","Resume":"Click to create resume for Member","Project":"Click to create new Project record","Member Details":"Click to assign a Member to Project"}' label="Enter object Description" description="Please enter object with there description in JSON formate"/>
+            <property name="getFieldSetName" type="String" default='{"Contact":"Member_Field_Set_TM","Resume__c":"Resume_Field_Set_TM","Project__c":"Project_Field_Set_TM","Member_Details__c":"Member_Details_Field_Set_TM"}' label="Enter Field Set Name" description="Please enter object api name with there Field Set Name in JSON formate" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

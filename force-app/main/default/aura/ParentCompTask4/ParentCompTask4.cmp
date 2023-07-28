@@ -1,0 +1,18 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+
+    <aura:registerEvent name="transData" type="c:childParentEventTask4"/>
+    <aura:handler action="{!c.getEvents}" event="c:childParentEventTask4" />
+    <aura:attribute name="childValue" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:card>
+        <div>
+            <h1>Parent Component</h1>
+            <h1>{!v.childValue}</h1>
+            <lightning:button label="to child" variant="Neutral" onclick="{! c.sendValuetoChild}" />
+            <hr/>
+        </div>
+        {!v.body}
+    </lightning:card>
+</aura:component>

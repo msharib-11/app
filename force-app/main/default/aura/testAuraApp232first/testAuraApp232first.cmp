@@ -1,0 +1,4 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<p>This is second aura component</p>
+    <c:testAuracomp232 var1 = "Cloud Analogy"/>
+</aura:component>

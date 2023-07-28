@@ -1,0 +1,151 @@
+<template>
+    <lightning-card>
+        <div class="slds-clearfix">
+            <div class="slds-float_left">
+                <a class=" slds-p-left_small" href="https://www.cloudanalogy.com/" target="_blank">
+                    <img src="https://www.cloudanalogy.com/wp-content/uploads/2020/11/logo-ca-mobile@2x.png"
+                        alt="Cloud Analogy" width="180px">
+                </a>
+            </div>
+
+            <template for:each={Userobj} for:item="User">
+                
+                <div key={User.Id}>
+                    <div>
+                        <img src={User.FullPhotoUrl} alt="" class="slds-avatar slds-avatar_circle slds-float_right slds-m-right_medium"
+                        onclick={showPopover}>
+                    </div>
+                    <div class="slds-float_right">
+                    
+                    <div>
+                            <template if:true={show}>
+                                <section aria-label="Dialog title" aria-describedby="popover-body-id"
+                                    class="slds-dropdown slds-dropdown_medium slds-nubbin_top-right slds-m-top_x-large" role="dialog" style="left: 87%; margin-top: 40px; margin-right: 26px">
+                                    <button
+                                        class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-float_right slds-popover__close"
+                                        title="Close dialog">
+                                        <svg class="slds-button__icon" aria-hidden="true">
+                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Close dialog</span>
+                                    </button>
+                                    <div class="slds-popover__body">
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-4">
+                                            <a href="">
+                                                <img src={User.FullPhotoUrl} alt="User" width="50px" style="border-radius: 50%;" class="slds-avatar slds-avatar_circle">
+                                            </a>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3 ">
+                                            <div>
+                                                <div>
+                                                    <a href="">{User.Name}</a>
+                                                </div>
+                                                <div>
+                                                    <a href="">{User.Email}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <lightning-menu-divider></lightning-menu-divider>
+                                    <div>
+                                        <lightning-button label="Edit" title="action" class="slds-align_absolute-center" onclick={handleEditButton}>Edit User</lightning-button>
+                                    </div>
+                                    <!-- <lightning-menu-divider></lightning-menu-divider>
+                                    <div class="slds-grid slds-gutters slds-p-left_medium">
+                                        <div class="slds-col">
+                                            <a href="">Change picture</a>
+                                        </div>
+                                        <div class="slds-col">
+                                            <a href="">Change password</a>
+                                        </div>
+                                        <div class="slds-col">
+                                            <a href="">Log out</a>
+                                        </div>
+                                    </div>
+                                    <lightning-menu-divider></lightning-menu-divider>
+                                    <div>
+                                        <h4 class="slds-align_absolute-center">Notification</h4>
+                                    </div>
+                                    <lightning-menu-divider></lightning-menu-divider> -->
+
+
+                                    <!-- <div>
+                                    <h4 class="slds-align_absolute-center">Your personal pending leaves for approval - 0</h4>
+                                </div>
+                                <lightning-menu-divider></lightning-menu-divider>
+                                    <div>
+                                        <h4 class="slds-align_absolute-center">Alert of attendance limits</h4>
+                                    </div>
+                                <lightning-menu-divider></lightning-menu-divider>
+                                <div>
+                                    <h4 class="slds-align_absolute-center">You have no any alert notification for this months!</h4>
+                                </div> -->
+
+
+                                </section>
+                            </template>
+                        </div>
+
+                        <!-- <lightning-button-menu class="slds-p-right_medium" alternative-text="Show menu" menu-alignment="auto" icon-name="standard:avatar_loading" icon-size="125px">                
+                        <div class="slds-dropdown_right slds-dropdown_medium">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <a href="">
+                                        <img src="https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg" alt="User" width="100px">
+                                    </a>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3 slds-align_absolute-center">
+                                    <div>
+                                        <div>
+                                            <a href="">8</a>
+                                        </div>
+                                        <div>
+                                            <a href=""></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <lightning-menu-divider></lightning-menu-divider>
+                            <div>
+                                <h4 class="slds-align_absolute-center">Action</h4>
+                            </div>
+                            <lightning-menu-divider></lightning-menu-divider>
+                            <div class="slds-grid slds-gutters slds-p-left_medium">
+                                <div class="slds-col">
+                                    <a href="">Change picture</a>
+                                </div>
+                                <div class="slds-col">
+                                    <a href="">Change password</a>
+                                </div>
+                                <div class="slds-col">
+                                    <a href="">Log out</a>
+                                </div>
+                            </div>
+                            <lightning-menu-divider></lightning-menu-divider>
+                                <div>
+                                    <h4 class="slds-align_absolute-center">Notification</h4>
+                                </div>
+                            <lightning-menu-divider></lightning-menu-divider>
+                            <div>
+                                <h4 class="slds-align_absolute-center">Your personal pending leaves for approval - 0</h4>
+                            </div>
+                            <lightning-menu-divider></lightning-menu-divider>
+                                <div>
+                                    <h4 class="slds-align_absolute-center">Alert of attendance limits</h4>
+                                </div>
+                            <lightning-menu-divider></lightning-menu-divider>
+                            <div>
+                                <h4 class="slds-align_absolute-center">You have no any alert notification for this months!</h4>
+                            </div>
+                        </div>
+                    </lightning-button-menu> -->
+                    </div>
+                </div>
+                </template>
+
+
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target> 
+        <target>lightningCommunity__Default</target>
+    </targets>
+     <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightningCommunity__Default">
+            <property name="allFields" type="String" default='[{"label":"LastName","value":"LastName"}{"label":"LastName","value":"LastName"},{"label":"Manager","value":"Manager__r.Name"},{"label":"PC/PM","value":"PC_PM__r.Name"},{"label":"Profile","value":"Profile__c"},{"label":"Real Experience","value":"Real_Experience__c"},{"label":"Resume Experience","value":"Resume_Experience__c"},{"label":"TL Lead","value":"TL_Lead__r.Name"},{"label":"Is Active","value":"Is_Active__c"}]' label="Enter total Field" description="Please enter all fields name to give in option for coloumn selection"/>
+            <property name="defaultFields" type="String" default='[{"label":"LastName","value":"LastName"},{"label":"Manager","value":"Manager__c"},{"label":"Real Experience","value":"Real_Experience__c"},{"label":"Resume Experience","value":"Resume_Experience__c"}]' label="Enter Default Field" description="Please enter default fields to show in table"/>
+            <property name="pageSize" type="String" default='10' label="Number of records" description="Enter number of records to show on a page"/>
+            <property name="objectApiName" type="String" default='Contact' label="Enter object Api Name" description="Please enter object Api name"/>
+            <property name="fieldSetName" type="String" default='Member_Details_Field_Set_TM' label="Enter FieldSet Name" description="Enter fieldSet Name for the object"/>
+        
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,96 @@
+.memberName {
+    font-weight: bold;
+    text-align: center;
+}
+.icon:hover{
+    --sds-c-icon-color-foreground-default: 	#0D9DDA;
+}
+.hiddenIcons{
+    display:none;
+}
+
+.dataTableHeight {
+    height: 70% !important;
+}
+
+.headerSize {
+    font-size: 20px;
+}
+
+.dataSize {
+    font-size: 15px;
+}
+
+.slds-modal__container {
+    width: 70%;
+}
+
+.slds-col {
+    font-size: 150%;
+}
+
+strong {
+    color: rgb(66, 65, 65);
+}
+
+.slds-box{
+    margin: 1% 1% 2% 2%;
+    box-shadow: 1px 2px 3px 4px rgba(12,12,12,0.2);
+    border-radius: 15px;
+    transition: background-color 0.2s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+}
+
+.slds-box:hover{
+    display: block;
+    background-color: rgba(219, 219, 219, 0.647);
+    box-shadow: 1px 2px 3px 4px rgba(12, 12, 12, 0.548);
+    cursor: pointer;
+    animation-name: bounce;
+    -moz-animation-name: bounce;
+}
+.slds-box:hover .hiddenIcons{
+    display: block;
+}
+.gray-utility-icon:hover{
+    --sds-c-icon-color-foreground-default: 	#0176D3; 
+}
+
+.text-heading {
+    color:rgb(66, 65, 65);
+}
+.slds-modal__title{
+    color: white;
+}
+.slds-modal__header{
+  background-color: rgb(66, 65, 65);
+}
+@media (max-width:833px){
+    .container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .slds-box{
+        width: 40%;
+    }
+    .filterContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 97%;
+        padding-left: 0%;
+    }
+    .listViewToggle{
+        margin-right: 14%;
+    }
+    .monthCombobox{
+        padding-left: 0%;
+    }
+}

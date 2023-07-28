@@ -1,0 +1,16 @@
+<template>
+    <lightning-card>
+        <h2 class="slds-text-heading_large">Account Data</h2>
+        <br>
+        <lightning-input type="text" label="Enter Account Name To Search"
+            value={searchKey} 
+            onchange={handelSearchKey}> 
+        </lightning-input>
+        <lightning-button label="Search" variant="brand" onclick={SearchAccountHandler}></lightning-button>
+        <br>
+        <template if:true={acList}>
+            <lightning-datatable data={acList} columns={col} key-field="Id"></lightning-datatable>
+        </template>
+        <template if:true={error}>{error}</template>
+    </lightning-card>
+</template>

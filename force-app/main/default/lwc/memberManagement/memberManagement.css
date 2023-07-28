@@ -1,0 +1,48 @@
+.Button{
+    --sds-c-button-brand-color-background: #000000;
+    --sds-c-button-text-color: #feffff;
+    transition: transform .2s;
+    border-radius: 10px;
+}
+.Button:hover{
+    transform: scale(1.1);
+    --sds-c-button-brand-color-background-hover: #000000;
+    --sds-c-button-text-color: #feffff;
+}
+.NavButton{
+     --sds-c-button-brand-color-background: #000000;
+    --sds-c-button-text-color: #feffff;
+    transition: transform .2s;
+    border-radius: 10px;
+}
+.NavButton:hover{
+     transform: scale(1.1);
+    --sds-c-button-brand-color-background-hover: #000000;
+    --sds-c-button-text-color: #feffff;
+}
+:is(.buttonIcon,.navForSmall){
+        display:none;
+    }
+:host {
+    --lwc-tableColorBackgroundHeader : #b9b9b9;
+}
+@media only screen and (max-width: 751px) {
+    .navForSmall{
+        display: block;
+    }
+    .hideOnSmallScreen{
+        display: none;
+    }
+    .freeSpace{
+        width: 40%;
+    }
+    .Button{
+        display: none;
+    }
+    .buttonIcon{
+        display: block;
+    }
+    lightning-datatable{
+        overflow-x: auto;
+    }
+}

@@ -1,0 +1,181 @@
+<!-- sldsValidatorIgnore -->
+<!--
+  @description       : 
+  @author            : Mayank Kumar Gupta
+  @group             : 
+  @last modified on  : 07-21-2023
+  @last modified by  : Mayank Kumar Gupta
+-->
+<template>
+	<!-- This is controlled by project datatable to switch between modal if memberdetail record is present or not. -->
+	<template if:true={viewTemplateSwitcher}>
+		<template if:true={isDatatable}>
+			<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+				class="slds-modal slds-fade-in-open slds-modal_large">
+				<div class="slds-modal__container">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={modalCloseHandler}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<!-- Modal header -->
+					<div class="slds-modal__header slds-modal__header">
+						<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate slds-modal__title">
+							<b> {projectName}</b>
+						</h1>
+					</div>
+					<!-- Modal body -->
+					<div class="slds-modal__content slds-p-around_medium slds-scrollable_y " style="height:57%;"
+						id="modal-content-id-1">
+						<div class="slds-grid slds-gutters slds-m-bottom_small">
+							<div class="slds-col slds-size_3-of-6">
+								<p class="slds-p-left_large"><strong>{label.totalHours} :</strong> {projectTotalHours}
+								</p>
+							</div>
+							<div class="slds-col slds-size_3-of-6 slds-text-align_right">
+								<p class="slds-p-right_large"><strong>{label.realUsedHours} :</strong>
+									{projectRealUsedHours}</p>
+							</div>
+						</div>
+						<lightning-layout class="filterContainer slds-m-left_large slds-m-bottom_large">
+							<lightning-layout-item size="2">
+								<lightning-combobox label="Year" value={year} options={yearsFromParent}
+									onchange={handleChangeForYear} class="">
+								</lightning-combobox>
+							</lightning-layout-item>
+							<lightning-layout-item size="2">
+								<lightning-combobox label="Month" value={month} options={monthFromParent}
+									onchange={handleChangeForMonth} class="monthCombobox slds-p-left_medium">
+								</lightning-combobox>
+							</lightning-layout-item>
+							<template if:true={isGrid}>
+								<lightning-layout-item size="6"></lightning-layout-item>
+							</template>
+							<template if:false={isGrid}>
+								<lightning-layout-item size="4"></lightning-layout-item>
+								<lightning-layout-item size="1">
+									<lightning-icon icon-name="utility:download" alternative-text="Download"
+										title="Export to email" onclick={getSelectedRecForMemberDetail}
+										class="gray-utility-icon slds-float_right slds-p-top_large"></lightning-icon>
+								</lightning-layout-item>
+								<lightning-layout-item size="1">
+									<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open slds-align_absolute-center ">
+										<lightning-icon icon-name="utility:email" alternative-text="Email"
+											title="Export to desktop" onclick={handleVisibility}
+											class="gray-utility-icon slds-p-top_large"></lightning-icon>
+										<div if:true={isvisible}>
+											<div
+												class="slds-dropdown slds-dropdown_large slds-dropdown_right slds-nubbin_top-right slds-p-top_small slds-p-bottom_small slds-theme_shade">
+												<lightning-input label="Email Id" data-id="txtEmailAddress" onchange={handleEmailId}
+													class="slds-var-p-around_medium"></lightning-input>
+												<lightning-button variant="success" label="Send" title="Primary action"
+													onclick={sendMail} class="slds-m-left_medium slds-float_left">
+												</lightning-button>
+												<lightning-button variant="destructive" label="Cancel" title="Primary action"
+													onclick={handleVisibility} class="slds-m-right_medium slds-float_right">
+												</lightning-button>
+											</div>
+										</div>
+									</div>
+								</lightning-layout-item>
+							</template>
+							<lightning-layout-item size="2" class="slds-m-right_large slds-p-top_small">
+								<lightning-input type="toggle" label="List View" onchange={changeView}
+									checked={IsActive} class="listViewToggle slds-m-left_large slds-m-bottom_medium slds-m-top_small"
+									name="input1">
+								</lightning-input>
+							</lightning-layout-item>
+						</lightning-layout>
+						<!-- Data Shown -->
+						<template if:true={isGrid}>
+							<lightning-layout multiple-rows="true" class="container">
+								<template for:each={memberDetailDataToDisplay} for:item="md">
+									<lightning-layout-item size="2" class="slds-box" data-id="name1"
+										key={md.Id}>
+										<p><img src={coverImage} style="width: 70%;" class="slds-align_absolute-center">
+										</p>
+										<p
+											class="memberName slds-m-top_small slds-text-heading_small slds-m-bottom_small slds-truncate">
+											{md.Member_Name}</p>
+										<div class="hiddenIcons">
+											<lightning-icon size='small' data-id={md.Id} class="icon slds-icon_small"
+												icon-name="utility:preview" alternative-text="View Member"
+												onclick={callViewfun} title="View Member"></lightning-icon>
+											<lightning-icon size='small' data-id={md.Id}
+												class="icon slds-float_right slds-icon_small" icon-name="utility:edit"
+												alternative-text="Edit Member" onclick={callEditfun}
+												title="Edit Member"></lightning-icon>
+										</div>
+									</lightning-layout-item>
+								</template>
+							</lightning-layout>
+						</template>
+						<template if:false={isGrid}>
+							<div
+								class="slds-m-around_x-large dataTableHeight slds-table_bordered slds-table_col-bordered slds-border_top slds-border_right slds-border_bottom slds-border_left slds-table_striped ">
+								<lightning-datatable key-field="id" data={memberDetailDataToDisplay} columns={columns}
+									name={objectApiName} onrowaction={callRowAction}>
+								</lightning-datatable>
+							</div>
+						</template>
+					</div>
+					<!-- Modal footer -->
+					<div class="slds-modal__footer">
+						<lightning-button label="Cancel" variant="brand" onclick={modalCloseHandler}></lightning-button>
+					</div>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+		</template>
+	</template>
+
+	<!-- Dynamic Modal for record edit form of Member details or project-->
+	<template if:true={displayEditForm}>
+		<c-rec-edit-form-for-member-detail record-id={recordId} object-api-name={objectApiName}
+			list-of-fields-from-fieldset={listOfMemberDetailFields} onclosemodal={recordEditCloseHandler}
+			oneditsuccess={handleSuccess} onsubmitmodal={submitHandler}
+			modal-header-for-record-edit-form={modalHeaderForRecordEditForm}>
+		</c-rec-edit-form-for-member-detail>
+	</template>
+	<!-- Modal for record edit form of Member details /closing-->
+
+	<template if:true={displayViewForm}>
+		<c-rec-view-form-for-member-detail record-id={recordId} object-api-name={objectApiName}
+			list-of-fields-from-fieldset={listOfMemberDetailFields} onclosemodalforview={closeModalForViewHandler}
+			record-view-form-modal-header={recordViewFormModalHeader} member-detail-list={memberDetailList}
+			project-detail-list={projectDetailList} years-from-parent={yearsFromParent}>
+		</c-rec-view-form-for-member-detail>
+	</template>
+
+
+	<template if:false={viewTemplateSwitcher}>
+		<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+			class="slds-modal slds-fade-in-open ">
+			<div class="slds-modal__container">
+				<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+					onclick={modalCloseHandler}>
+					<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+						size="small"></lightning-icon>
+					<span class="slds-assistive-text">Close</span>
+				</button>
+				<!-- Modal header -->
+				<div class="slds-modal__header">
+					<h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">No members found</h1>
+				</div>
+				<!-- Modal body -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+					<div class="slds-text-heading_large slds-align_absolute-center">
+						Members are not assigned to this project till now.<br>
+						Please check after some time....
+					</div>
+				</div>
+				<!-- Modal footer -->
+				<div class="slds-modal__footer">
+					<lightning-button label="Back" variant="brand" onclick={modalCloseHandler}></lightning-button>
+				</div>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+	</template>
+</template>

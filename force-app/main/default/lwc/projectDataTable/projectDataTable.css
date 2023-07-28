@@ -1,0 +1,29 @@
+.dataTableHeading{
+    font-size: 350%;
+}
+.errorString{
+    color: red;
+}
+.yearMonthCombobox{
+    width: 80%;
+}
+.searchFieldSize{
+    width: 50%;
+}
+:host {
+    --lwc-tableColorBackgroundHeader : #b9b9b9;
+}
+/* #styled-select {
+    width: 260px;
+    height: 34px;
+    border: 1px solid #ccc;
+    margin:auto;
+ }
+ 
+ #styled-select select {
+    width: 260px;
+    padding: 5px;
+    height: 34px;
+    font-family:helvetica-roman;
+     text-indent: 0.01px;
+ } */
